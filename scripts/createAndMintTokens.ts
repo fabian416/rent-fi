@@ -82,8 +82,8 @@ export async function createNewToken() {
   const lamports = await connection.getMinimumBalanceForRentExemption(
     mintLen + metadataExtension + metadataLen,
   );
-  // 10 million aiming to not use it max Fee at all
-  const maxFee =  BigInt(10_000_000 * Math.pow(10, 9))
+  // 100 million aiming to not use it max Fee at all
+  const maxFee =  BigInt(100_000_000 * Math.pow(10, 9))
 
   // Instruction to invoke System Program to create new account
   const createAccountInstruction = SystemProgram.createAccount({
@@ -132,6 +132,7 @@ export async function createNewToken() {
     symbol: metaData.symbol,
     uri: metaData.uri,
   });
+
   const transaction = new Transaction().add(
     createAccountInstruction,
     initializeMetadataPointerInstruction,
@@ -140,11 +141,14 @@ export async function createNewToken() {
     initializeMintInstruction,
     initializeMetadataInstruction,
   );
+
   const transactionSignature = await sendAndConfirmTransaction(
     connection,
     transaction,
     [payer, mintKeypair], // Signers
   );
+
+  
   console.log(
     'Create mint account:',
     generateExplorerTxUrl(connection, transactionSignature),

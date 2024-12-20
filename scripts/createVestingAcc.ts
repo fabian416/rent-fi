@@ -11,7 +11,7 @@ const CLUSTER_URL = process.env.CLUSTER_URL || "https://api.devnet.solana.com";
 const PROGRAM_ID = new PublicKey("6U1EhFyn2nFpNsxD5Rf6JU1eQeRgBPPv3aET6xZkoF5F"); // Reemplaza con tu PROGRAM_ID
 const WALLET_KEYPAIR_PATH = process.env.WALLET_KEYPAIR_PATH || "Provide a wallety key pair";
 
-// Parámetros de inicialización
+// Parámetros de inicialización WE USE THE DECIMALS FACTOR SO WE DONT NEED TO USE IT IN THE CONTRACTS
 const TOTAL_TOKENS = new anchor.BN(150_000_000 * 10 ** 9); // Tokens totales (para Marketing) elevando para lograr 9 decimales
 const CLIFF_DURATION = new anchor.BN(3 * 30 * 24 * 60 * 60); // Cliff en segundos
 const VESTING_DURATION = new anchor.BN(12 * 30 * 24 * 60 * 60); // Vesting lineal en segundos

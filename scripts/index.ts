@@ -5,9 +5,9 @@ dotenv.config();
 
 async function main() {
     // Create new token
-    // await createNewToken();
+ await createNewToken();
     // Mint and distribute 1 billion tokens
-   await mintAndDistributeTokens(); 
+ //  await mintAndDistributeTokens(); 
 }
 
 main();

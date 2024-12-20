@@ -1,4 +1,4 @@
-use anchor_lang::prelude::*;
+use anchor_lang::{prelude::*, solana_program::message};
 
 #[error_code]
 pub enum ErrorCode {
@@ -6,6 +6,8 @@ pub enum ErrorCode {
     InsufficientTokens,
     #[msg("Invalid beneficiary address.")]
     InvalidBeneficiary,
+    #[msg("Invalid beneficiary address.")]
+    InvalidBeneficiaryType,
     #[msg("Arithmetic overflow occurred.")]
     ArithmeticOverflow,
     #[msg("Unauthorized access.")]
@@ -20,4 +22,6 @@ pub enum ErrorCode {
     InvalidPdaTokenAccount,
     #[msg("initial tokens already claimed.")]
     InitialTokensAlreadyClaimed,
+    #[msg("No releasable tokens to give")]
+    NoReleasableTokens,
 }

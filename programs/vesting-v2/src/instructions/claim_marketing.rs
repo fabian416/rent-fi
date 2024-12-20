@@ -16,7 +16,6 @@ pub fn claim_marketing(ctx: Context<ClaimTokens>) -> Result<()> {
     let released_tokens = ctx.accounts.vesting_account.released_tokens;
     let total_tokens = ctx.accounts.vesting_account.total_tokens;
 
-    const DECIMALS_FACTOR: u64 = 10u64.pow(9);
     // Calculamos el tiempo actual
     let now = Clock::get()?.unix_timestamp;
 
@@ -52,8 +51,7 @@ pub fn claim_marketing(ctx: Context<ClaimTokens>) -> Result<()> {
         return Err(ErrorCode::InvalidAccountType.into());
     }
 
-    const MARKETING_INITIAL_RELEASE: u64 = 3_750_000 * DECIMALS_FACTOR; // 37 mil quinientos con 9 decimales // 25% liberados inmediatamente
-
+    const MARKETING_INITIAL_RELEASE: u64 = 3_750_000; // 37 mil quinientos con 9 decimales // 25% liberados inmediatamente
     let time_since_start = now - start_time;
     let total_vested: u64;
 
