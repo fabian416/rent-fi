@@ -15,7 +15,7 @@ pub fn claim_team(ctx: Context<ClaimTokens>) -> Result<()> {
     let total_tokens = ctx.accounts.vesting_account.total_tokens;
     let start_time = ctx.accounts.vesting_account.start_time;
     let cliff_period = ctx.accounts.vesting_account.cliff_period;
-    let now = Clock::get()?.unix_timestamp;
+    let now: i64 = Clock::get()?.unix_timestamp;
 
     let vesting_account: &mut Account<'_, crate::state::VestingAccount> =
         &mut ctx.accounts.vesting_account;
