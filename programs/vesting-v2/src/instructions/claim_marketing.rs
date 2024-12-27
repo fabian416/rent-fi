@@ -12,7 +12,7 @@ pub fn claim_marketing(ctx: Context<ClaimTokens>) -> Result<()> {
     let mint = ctx.accounts.vesting_account.mint;
     let beneficiary_type = ctx.accounts.vesting_account.beneficiary_type;
 
-    if beneficiary_type != 2 {
+    if beneficiary_type != 1 {
         return Err(ErrorCode::InvalidAccountType.into());
     }
 
