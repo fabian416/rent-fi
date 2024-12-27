@@ -24,7 +24,6 @@ pub struct Initialize<'info> {
 pub fn initialize(
     ctx: Context<Initialize>,
     cliff_duration: i64,
-    vesting_duration: i64,
     beneficiary_pubkey: Pubkey,
     beneficiary_type: u8,
     mint_pubkey: Pubkey,
@@ -35,7 +34,6 @@ pub fn initialize(
     vesting_account.released_tokens = 0;
     vesting_account.start_time = Clock::get()?.unix_timestamp;
     vesting_account.cliff_period = cliff_duration;
-    vesting_account.vesting_period = vesting_duration;
     vesting_account.beneficiary_type = beneficiary_type;
     vesting_account.mint = mint_pubkey;
 
