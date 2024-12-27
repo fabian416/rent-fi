@@ -1,4 +1,4 @@
-use anchor_lang::{prelude::*, solana_program::message};
+use anchor_lang::prelude::*;
 
 #[error_code]
 pub enum ErrorCode {
@@ -24,4 +24,6 @@ pub enum ErrorCode {
     InitialTokensAlreadyClaimed,
     #[msg("No releasable tokens to give")]
     NoReleasableTokens,
+    #[msg("0 Tokens to claim.")]
+    NoTokensToClaim,
 }

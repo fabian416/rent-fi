@@ -95,6 +95,12 @@ pub fn claim_team(ctx: Context<ClaimTokens>) -> Result<()> {
     // Calculamos los tokens que se pueden liberar ahora
     let releasable = available_tokens - released_tokens;
 
+    msg!("Releasable tokens: {}", releasable);
+
+    if releasable == 0 {
+        return Err(ErrorCode::NoTokensToClaim.into());
+    }
+
     if releasable > 0 {
         let vesting_account = &mut ctx.accounts.vesting_account; // Acceso mutable
         vesting_account.released_tokens += releasable;

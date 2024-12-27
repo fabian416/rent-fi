@@ -98,6 +98,10 @@ pub fn claim_marketing(ctx: Context<ClaimTokens>) -> Result<()> {
 
     msg!("Releasable tokens: {}", releasable);
 
+    if releasable == 0 {
+        return Err(ErrorCode::NoTokensToClaim.into());
+    }
+
     // Actualizamos la cuenta mutable y realizamos la transferencia si es necesario
     if releasable > 0 {
         let vesting_account = &mut ctx.accounts.vesting_account; // Acceso mutable
