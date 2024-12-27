@@ -9,7 +9,7 @@ pub struct VestingAccount {
     pub vesting_period: i64, // Duración del vesting lineal (en segundos) Duration of the lineal vesting (in seconds )
     pub start_time: i64,     // Inicio del vesting Start of the vesting
     pub beneficiary: Pubkey, // Dirección del beneficiario // Address beneficiary of the tokens
-    pub beneficiary_type: u8, // Type of beneficiary (Marketing =  1, TeamDev  = 2 Dao = 3 )
+    pub beneficiary_type: u8, // Type of beneficiary (Marketing =  1, TeamDev  = 2 Dao = 3 Fund = 4 )
     pub mint: Pubkey,
 }
 

@@ -3,13 +3,13 @@ use anchor_lang::prelude::*;
 
 // Initialize the instruction for every account
 #[derive(Accounts)]
-#[instruction(total_tokens: u64, cliff_duration: i64, vesting_duration: i64, beneficiary_pubkey: Pubkey)]
+#[instruction(total_tokens: u64, cliff_duration: i64, vesting_duration: i64, beneficiary_pubkey: Pubkey, beneficiary_type: u8)]
 pub struct Initialize<'info> {
     #[account(
         init,
         payer = payer,
         space = 8 + VestingAccount::SIZE,
-        seeds = [b"vesting", beneficiary_pubkey.as_ref()],
+        seeds = [b"vesting", beneficiary_pubkey.as_ref(), &beneficiary_type.to_le_bytes()],
         bump
     )]
     pub vesting_account: Account<'info, VestingAccount>,
@@ -23,7 +23,6 @@ pub struct Initialize<'info> {
 
 pub fn initialize(
     ctx: Context<Initialize>,
-    total_tokens: u64,
     cliff_duration: i64,
     vesting_duration: i64,
     beneficiary_pubkey: Pubkey,
@@ -33,7 +32,6 @@ pub fn initialize(
     let vesting_account = &mut ctx.accounts.vesting_account;
 
     vesting_account.beneficiary = beneficiary_pubkey;
-    vesting_account.total_tokens = total_tokens;
     vesting_account.released_tokens = 0;
     vesting_account.start_time = Clock::get()?.unix_timestamp;
     vesting_account.cliff_period = cliff_duration;

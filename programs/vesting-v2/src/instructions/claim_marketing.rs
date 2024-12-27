@@ -12,17 +12,18 @@ pub fn claim_marketing(ctx: Context<ClaimTokens>) -> Result<()> {
     let mint = ctx.accounts.vesting_account.mint;
     let start_time = ctx.accounts.vesting_account.start_time;
     let cliff_period = ctx.accounts.vesting_account.cliff_period;
-    let vesting_period = ctx.accounts.vesting_account.vesting_period;
     let released_tokens = ctx.accounts.vesting_account.released_tokens;
-    let total_tokens = ctx.accounts.vesting_account.total_tokens;
+    let beneficiary_type = ctx.accounts.vesting_account.beneficiary_type;
 
     // Calculamos el tiempo actual
     let now = Clock::get()?.unix_timestamp;
 
     // Derivamos el PDA y las semillas
     let program_id = *ctx.program_id;
-    let (program_signer, bump) =
-        Pubkey::find_program_address(&[b"vesting", beneficiary.as_ref()], &program_id);
+    let (program_signer, bump) = Pubkey::find_program_address(
+        &[b"vesting", beneficiary.as_ref(), beneficiary_type],
+        &program_id,
+    );
     let seeds: &[&[u8]] = &[b"vesting", beneficiary.as_ref(), &[bump]];
     let signer_seeds: &[&[&[u8]]] = &[seeds];
 
@@ -51,29 +52,33 @@ pub fn claim_marketing(ctx: Context<ClaimTokens>) -> Result<()> {
         return Err(ErrorCode::InvalidAccountType.into());
     }
 
-    const MARKETING_INITIAL_RELEASE: u64 = 3_750_000; // 37 mil quinientos con 9 decimales // 25% liberados inmediatamente
-    let time_since_start = now - start_time;
-    let total_vested: u64;
+    const MARKETING_INITIAL_RELEASE: u64 = 3_750_000; // 3.5 milllones con 9 decimales // 25% liberados inmediatamente
+    const QUARTERLY_RELEASE: u64 = 1_410_000; // Amount of toknes ot be released at the end of every quarter
+    const TOTAL_VESTING_PERIOD: u64 = 24;
+    const QUARTERS_IN_SECONDS: i64 = 60 * 60 * 24 * 30 * 3;
 
-    if now < start_time + cliff_period {
-        if released_tokens >= MARKETING_INITIAL_RELEASE {
-            // Si ya se retiraron los tokens iniciales y estamos antes del cliff, devolvemos un error
-            return Err(ErrorCode::InitialTokensAlreadyClaimed.into());
+    let mut available_tokens: u64 = 0;
+
+    if now >= start_time {
+        if released_tokens < MARKETING_INITIAL_RELEASE {
+            available_tokens = MARKETING_INITIAL_RELEASE;
         }
-        // Antes del cliff, permitir solo el 25% inicial
-        total_vested = MARKETING_INITIAL_RELEASE;
-    } else if time_since_start > vesting_period {
-        // Después del vesting, liberar todos los tokens
-        total_vested = total_tokens;
-    } else {
-        // Vesting lineal después del cliff
-        total_vested = MARKETING_INITIAL_RELEASE
-            + ((total_tokens - MARKETING_INITIAL_RELEASE) as u128 * time_since_start as u128
-                / vesting_period as u128) as u64;
+    }
+
+    if now >= start_time + cliff_period {
+        // Calculate how many quarters has been passed since cliff ending
+        let time_since_cliff = now - (start_time + cliff_period);
+        let quarters_passed = (time_since_cliff / QUARTERS_IN_SECONDS) as u64;
+
+        // Calculate free tokens based in  quarters completed
+        let max_quarters = TOTAL_VESTING_PERIOD / 3; // 24 MONTHS  = 8 trimestres
+        let vested_quarters = quarters_passed.min(max_quarters);
+
+        available_tokens += vested_quarters * QUARTERLY_RELEASE;
     }
 
     // Calculamos los tokens que se pueden liberar ahora
-    let releasable = total_vested - released_tokens;
+    let releasable = available_tokens - released_tokens;
 
     msg!("Releasable tokens: {}", releasable);
 
