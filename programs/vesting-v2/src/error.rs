@@ -1,3 +1,5 @@
+use std::ffi::FromBytesUntilNulError;
+
 use anchor_lang::prelude::*;
 
 #[error_code]
@@ -26,4 +28,8 @@ pub enum ErrorCode {
     NoReleasableTokens,
     #[msg("0 Tokens to claim.")]
     NoTokensToClaim,
+    #[msg("First unlock already claimed.")]
+    FirstUnlockAlreadyClaimed,
+    #[msg("Unlock time did not finish.")]
+    UnlockTimeNotFinished,
 }
