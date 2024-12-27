@@ -10,10 +10,25 @@ pub fn claim_marketing(ctx: Context<ClaimTokens>) -> Result<()> {
     // Extraemos los datos inmutables al principio
     let beneficiary = ctx.accounts.vesting_account.beneficiary;
     let mint = ctx.accounts.vesting_account.mint;
+    let beneficiary_type = ctx.accounts.vesting_account.beneficiary_type;
+
+    if beneficiary_type != 2 {
+        return Err(ErrorCode::InvalidAccountType.into());
+    }
+
+    if ctx.accounts.token_account.key()
+        != get_associated_token_address_with_program_id(&beneficiary, &mint, &ID)
+    {
+        return Err(ErrorCode::InvalidTokenAccount.into());
+    }
+
+    if ctx.accounts.mint.key() != mint {
+        return Err(ErrorCode::InvalidMint.into());
+    }
+
     let start_time = ctx.accounts.vesting_account.start_time;
     let cliff_period = ctx.accounts.vesting_account.cliff_period;
     let released_tokens = ctx.accounts.vesting_account.released_tokens;
-    let beneficiary_type = ctx.accounts.vesting_account.beneficiary_type;
 
     // Calculamos el tiempo actual
     let now = Clock::get()?.unix_timestamp;
@@ -21,10 +36,19 @@ pub fn claim_marketing(ctx: Context<ClaimTokens>) -> Result<()> {
     // Derivamos el PDA y las semillas
     let program_id = *ctx.program_id;
     let (program_signer, bump) = Pubkey::find_program_address(
-        &[b"vesting", beneficiary.as_ref(), beneficiary_type],
+        &[
+            b"vesting",
+            beneficiary.as_ref(),
+            &beneficiary_type.to_le_bytes(),
+        ],
         &program_id,
     );
-    let seeds: &[&[u8]] = &[b"vesting", beneficiary.as_ref(), &[bump]];
+    let seeds: &[&[u8]] = &[
+        b"vesting",
+        beneficiary.as_ref(),
+        &beneficiary_type.to_le_bytes(),
+        &[bump],
+    ];
     let signer_seeds: &[&[&[u8]]] = &[seeds];
 
     // Validamos que el beneficiario esté intentando reclamar desde su ATA
@@ -42,14 +66,6 @@ pub fn claim_marketing(ctx: Context<ClaimTokens>) -> Result<()> {
 
     if ctx.accounts.pda_token_account.key() != expected_pda_ata {
         return Err(ErrorCode::InvalidPdaTokenAccount.into());
-    }
-
-    if ctx.accounts.mint.key() != mint {
-        return Err(ErrorCode::InvalidMint.into());
-    }
-
-    if ctx.accounts.vesting_account.beneficiary_type != 1 {
-        return Err(ErrorCode::InvalidAccountType.into());
     }
 
     const MARKETING_INITIAL_RELEASE: u64 = 3_750_000; // 3.5 milllones con 9 decimales // 25% liberados inmediatamente
