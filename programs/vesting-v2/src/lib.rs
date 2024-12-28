@@ -35,4 +35,10 @@ pub mod vesting_v2 {
     pub fn claim_marketing(ctx: Context<ClaimTokens>) -> Result<()> {
         instructions::claim_marketing::claim_marketing(ctx)
     }
+    pub fn claim_dao(ctx: Context<ClaimTokens>) -> Result<()> {
+        instructions::claim_dao::claim_dao(ctx)
+    }
+    pub fn claim_fund(ctx: Context<ClaimTokens>) -> Result<()> {
+        instructions::claim_fund::claim_fund(ctx)
+    }
 }
