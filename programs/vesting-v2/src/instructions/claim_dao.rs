@@ -66,13 +66,13 @@ pub fn claim_dao(ctx: Context<ClaimTokens>) -> Result<()> {
         return Err(ErrorCode::InvalidPdaTokenAccount.into());
     }
 
-    const TEAM_FIRST_UNLOCK: u64 = 1_000_000; // 1 milllones con 9 decimales // 20% liberados inmediatamente
-    const TEAM_FINAL_UNLOCK: u64 = 8_000_000; // Final unlock of 8 million tokens
+    const TEAM_FIRST_UNLOCK: u64 = 1_000_000; // 1 millones con 9 decimales // 20% liberados inmediatamente
+    const TEAM_FINAL_UNLOCK: u64 = 4_000_000; // Final unlock of 8 million tokens
     const TOTAL_LOCK_TIME: i64 = 60 * 60 * 24 * 30 * 12; // 12 months in seconds
 
     let mut available_tokens: u64 = 0;
 
-    if now >= start_time + cliff_period {
+    if now >= start_time + cliff_period && now < start_time + TOTAL_LOCK_TIME {
         if released_tokens < TEAM_FIRST_UNLOCK {
             available_tokens = TEAM_FIRST_UNLOCK;
         } else {
@@ -82,10 +82,12 @@ pub fn claim_dao(ctx: Context<ClaimTokens>) -> Result<()> {
 
     if now >= start_time + TOTAL_LOCK_TIME {
         available_tokens += TEAM_FINAL_UNLOCK;
+    } else {
+        return Err(ErrorCode::LockTimeNotFinished.into());
     }
 
     // Calculamos los tokens que se pueden liberar ahora
-    let releasable = available_tokens - released_tokens;
+    let releasable = available_tokens;
 
     msg!("Releasable tokens: {}", releasable);
 

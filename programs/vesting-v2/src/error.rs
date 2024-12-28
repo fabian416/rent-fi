@@ -31,5 +31,5 @@ pub enum ErrorCode {
     #[msg("First unlock already claimed.")]
     FirstUnlockAlreadyClaimed,
     #[msg("Unlock time did not finish.")]
-    UnlockTimeNotFinished,
+    LockTimeNotFinished,
 }
