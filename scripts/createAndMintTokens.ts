@@ -72,7 +72,6 @@ export async function createNewToken() {
   const metadataLen = pack(metaData).length;
   const extensions = [
     ExtensionType.MetadataPointer,
-    ExtensionType.TransferFeeConfig,
   ];
 
   // Size of Mint Account with extension
@@ -93,17 +92,6 @@ export async function createNewToken() {
     lamports, // Amount of lamports transferred to created account
     programId: TOKEN_2022_PROGRAM_ID, // Program assigned as owner of created account
   });
-  // Instruction to initialize TransferFeeConfig Extension
-
-  const initializeTransferFeeConfig =
-    createInitializeTransferFeeConfigInstruction(
-      mint, // Mint Account address
-      transferFeeConfigAuthority.publicKey, // Authority to update fees
-      withdrawWithheldAuthority.publicKey, // Authority to withdraw fees
-      feeBasisPoints, // Basis points for transfer fee calculation // Maximum fee per transfer
-      maxFee,
-      TOKEN_2022_PROGRAM_ID, // Token Extension Program ID
-    );
 
   const initializeMetadataPointerInstruction =
     createInitializeMetadataPointerInstruction(
@@ -136,7 +124,6 @@ export async function createNewToken() {
   const transaction = new Transaction().add(
     createAccountInstruction,
     initializeMetadataPointerInstruction,
-    initializeTransferFeeConfig,
     // note: the above instructions are required before initializing the mint
     initializeMintInstruction,
     initializeMetadataInstruction,
