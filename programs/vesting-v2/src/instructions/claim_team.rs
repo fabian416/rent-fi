@@ -67,18 +67,11 @@ pub fn claim_team(ctx: Context<ClaimTokens>) -> Result<()> {
         return Err(ErrorCode::InvalidPdaTokenAccount.into());
     }
 
-    const TEAM_INITIAL_RELEASE: u64 = 2_000_000; // 2 milllones con 9 decimales // 20% liberados inmediatamente
     const QUARTERLY_RELEASE: u64 = 1_000_000; // Amount of toknes ot be released at the end of every quarter
     const TOTAL_VESTING_PERIOD: u64 = 24;
     const QUARTERS_IN_SECONDS: i64 = 60 * 60 * 24 * 30 * 3;
 
     let mut available_tokens: u64 = 0;
-
-    if now >= start_time {
-        if released_tokens < TEAM_INITIAL_RELEASE {
-            available_tokens = TEAM_INITIAL_RELEASE;
-        }
-    }
 
     if now >= start_time + cliff_period {
         // Calculate how many quarters has been passed since cliff ending
