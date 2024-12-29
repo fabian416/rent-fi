@@ -135,7 +135,6 @@ export async function createNewToken() {
     [payer, mintKeypair], // Signers
   );
 
-  
   console.log(
     'Create mint account:',
     generateExplorerTxUrl(connection, transactionSignature),
