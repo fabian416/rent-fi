@@ -1,16 +1,43 @@
-use anchor_lang::prelude::*;
+pub mod error;
+pub mod instructions;
+pub mod state;
 
+use anchor_lang::prelude::*;
+use instructions::*;
 declare_id!("8oHzDjuFH8n2oihjqqAq2Bu4L1iUMxYjMUUBcSpgJMzo");
 
 #[program]
 pub mod vesting_v3 {
+
     use super::*;
 
-    pub fn initialize(ctx: Context<Initialize>) -> Result<()> {
-        msg!("Greetings from: {:?}", ctx.program_id);
-        Ok(())
+    /// Inicializa una nueva cuenta de vesting.
+    pub fn initialize(
+        ctx: Context<Initialize>,
+        cliff_duration: i64,
+        beneficiary_pubkey: Pubkey,
+        beneficiary_type: u8,
+        mint_pubkey: Pubkey,
+    ) -> Result<()> {
+        instructions::initialize::initialize(
+            ctx,
+            cliff_duration,
+            beneficiary_pubkey,
+            beneficiary_type,
+            mint_pubkey,
+        )
+    }
+    pub fn claim_team(ctx: Context<ClaimTokens>) -> Result<()> {
+        instructions::claim_team::claim_team(ctx)
+    }
+
+    pub fn claim_marketing(ctx: Context<ClaimTokens>) -> Result<()> {
+        instructions::claim_marketing::claim_marketing(ctx)
+    }
+    pub fn claim_dao(ctx: Context<ClaimTokens>) -> Result<()> {
+        instructions::claim_dao::claim_dao(ctx)
+    }
+    pub fn claim_fund(ctx: Context<ClaimTokens>) -> Result<()> {
+        instructions::claim_fund::claim_fund(ctx)
     }
 }
-
-#[derive(Accounts)]
-pub struct Initialize {}
