@@ -145,10 +145,10 @@ export async function mintAndDistributeTokens() {
   console.log("Minting and distributing tokens...");
 
   // Mint Address
-  const mintAddress = "8zKNc2RqKSU2TFUXjs2RCELGn8SiJifePrJCTFMjbfoL";
+  const mintAddress = "J4RjmjUPT8HKpx7M8ZjwjBFLrQ2M7Ah9sSsYTq5jYC78";
   const mintPublicKey = new PublicKey(mintAddress);
 
-  // Destination test account addresses 4 PDAs 5 Multisigs
+  // Destination test account addresses 4 PDAs 4 Multisigs
   const distribution = [
       { destination: "DcULdzaL51jMapL4o9DVTqvVf3CM3CCHVjeXzfVGp6cT", amount: BigInt(30_000_000 * Math.pow(10, 9)) }, // 30% Liquidity multisig
       { destination: "", amount: BigInt(30_000_000 * Math.pow(10, 9)) }, // PDA Fund

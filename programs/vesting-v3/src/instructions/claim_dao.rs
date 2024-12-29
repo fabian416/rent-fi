@@ -111,7 +111,7 @@ pub fn claim_dao(ctx: Context<ClaimTokens>) -> Result<()> {
                 },
                 signer_seeds,
             ),
-            releasable,
+            releasable * 10u64.pow(9),
             9,
         )?;
         msg!("Released {} tokens for DAO", releasable);

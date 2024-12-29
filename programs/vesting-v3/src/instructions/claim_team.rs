@@ -110,7 +110,7 @@ pub fn claim_team(ctx: Context<ClaimTokens>) -> Result<()> {
                 },
                 signer_seeds,
             ),
-            releasable,
+            releasable * 10u64.pow(9),
             9,
         )?;
         msg!("Released {} tokens for Team Development", releasable);
