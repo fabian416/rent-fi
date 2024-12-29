@@ -8,6 +8,7 @@ skip-lint = false
 cliff-vesting = "F1RHqKoZ8exesFaiip8qos6smpfiHv3AdUCpeJLWtK4C"
 vesting = "6zwP3ZLNrv5jwksK8Eztt7tFt2WYKDqdo5FXQkWv5otc"
 vesting-v2 = "6U1EhFyn2nFpNsxD5Rf6JU1eQeRgBPPv3aET6xZkoF5F"
+vesting-v3 = "8oHzDjuFH8n2oihjqqAq2Bu4L1iUMxYjMUUBcSpgJMzo"
 
 [programs.localnet]
 rentfi = "6HD23Gh57Ezr3PJ2UmpcpiCqCE582VXe3jvpGqZXJwjv"
@@ -16,7 +17,7 @@ rentfi = "6HD23Gh57Ezr3PJ2UmpcpiCqCE582VXe3jvpGqZXJwjv"
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "https://api.devnet.solana.com"
+cluster = ["https://api.devnet.solana.com", "wss://api.devnet.solana.com/"]
 wallet = "~/.config/solana/id.json"
 
 [scripts]

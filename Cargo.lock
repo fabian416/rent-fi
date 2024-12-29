@@ -2435,6 +2435,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "vesting-v3"
+version = "0.1.0"
+dependencies = [
+ "anchor-lang",
+]
+
+[[package]]
 name = "wasi"
 version = "0.9.0+wasi-snapshot-preview1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
