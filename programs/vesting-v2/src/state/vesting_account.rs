@@ -17,6 +17,7 @@ impl VestingAccount {
         + 8  // cliff_period
         + 8  // start_time
         + 32 // beneficiary (Pubkey)
-        + 1  // beneficiary_type (u8)
+        + 8  // beneficiary_type 1 bytes (u8) +
+        + 7// 7 bytes fixing alineation
         + 32; // mint (Pubkey)
 }
