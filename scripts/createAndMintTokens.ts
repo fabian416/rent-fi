@@ -162,13 +162,16 @@ export async function mintAndDistributeTokens() {
   const mintAddress = "8zKNc2RqKSU2TFUXjs2RCELGn8SiJifePrJCTFMjbfoL";
   const mintPublicKey = new PublicKey(mintAddress);
 
-  // Destination test account addresses
+  // Destination test account addresses 4 PDAs 5 Multisigs
   const distribution = [
-      { destination: "DcULdzaL51jMapL4o9DVTqvVf3CM3CCHVjeXzfVGp6cT", amount: BigInt(40_000_000 * Math.pow(10, 9)) }, // 40%
-      { destination: "DcULdzaL51jMapL4o9DVTqvVf3CM3CCHVjeXzfVGp6cT", amount: BigInt(30_000_000 * Math.pow(10, 9)) }, // 30%
-      { destination: "DcULdzaL51jMapL4o9DVTqvVf3CM3CCHVjeXzfVGp6cT", amount: BigInt(5_000_000 * Math.pow(10, 9)) },  // 5%
-      { destination: "DcULdzaL51jMapL4o9DVTqvVf3CM3CCHVjeXzfVGp6cT", amount: BigInt(10_000_000 * Math.pow(10, 9)) }, // 10%
-      { destination: "DcULdzaL51jMapL4o9DVTqvVf3CM3CCHVjeXzfVGp6cT", amount: BigInt(15_000_000 * Math.pow(10, 9)) }, // 15%
+      { destination: "DcULdzaL51jMapL4o9DVTqvVf3CM3CCHVjeXzfVGp6cT", amount: BigInt(30_000_000 * Math.pow(10, 9)) }, // 30% Liquidity multisig
+      { destination: "DcULdzaL51jMapL4o9DVTqvVf3CM3CCHVjeXzfVGp6cT", amount: BigInt(30_000_000 * Math.pow(10, 9)) }, // PDA Fund
+      { destination: "DcULdzaL51jMapL4o9DVTqvVf3CM3CCHVjeXzfVGp6cT", amount: BigInt(10_000_000 * Math.pow(10, 9)) }, // Multisig Fund
+      { destination: "DcULdzaL51jMapL4o9DVTqvVf3CM3CCHVjeXzfVGp6cT", amount: BigInt(11_250_000 * Math.pow(10, 9)) }, // PDA marketing
+      { destination: "DcULdzaL51jMapL4o9DVTqvVf3CM3CCHVjeXzfVGp6cT", amount: BigInt(3_750_000 * Math.pow(10, 9)) }, //  Multisig marketing
+      { destination: "DcULdzaL51jMapL4o9DVTqvVf3CM3CCHVjeXzfVGp6cT", amount: BigInt(8_000_000 * Math.pow(10, 9)) },  //  PDA Team
+      { destination: "DcULdzaL51jMapL4o9DVTqvVf3CM3CCHVjeXzfVGp6cT", amount: BigInt(2_000_000 * Math.pow(10, 9)) },  //  Multisig Team
+      { destination: "DcULdzaL51jMapL4o9DVTqvVf3CM3CCHVjeXzfVGp6cT", amount: BigInt(5_000_000 * Math.pow(10, 9)) }, // PDA Dao 5M
   ];
 
   for (const { destination, amount } of distribution) {
