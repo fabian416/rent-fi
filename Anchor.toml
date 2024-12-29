@@ -17,7 +17,7 @@ rentfi = "6HD23Gh57Ezr3PJ2UmpcpiCqCE582VXe3jvpGqZXJwjv"
 url = "https://api.apr.dev"
 
 [provider]
-cluster = ["https://api.devnet.solana.com", "wss://api.devnet.solana.com/"]
+cluster = ["https://api.devnet.solana.com"]
 wallet = "~/.config/solana/id.json"
 
 [scripts]
