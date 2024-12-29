@@ -151,13 +151,13 @@ export async function mintAndDistributeTokens() {
   // Destination test account addresses 4 PDAs 5 Multisigs
   const distribution = [
       { destination: "DcULdzaL51jMapL4o9DVTqvVf3CM3CCHVjeXzfVGp6cT", amount: BigInt(30_000_000 * Math.pow(10, 9)) }, // 30% Liquidity multisig
-      { destination: "DcULdzaL51jMapL4o9DVTqvVf3CM3CCHVjeXzfVGp6cT", amount: BigInt(30_000_000 * Math.pow(10, 9)) }, // PDA Fund
-      { destination: "DcULdzaL51jMapL4o9DVTqvVf3CM3CCHVjeXzfVGp6cT", amount: BigInt(10_000_000 * Math.pow(10, 9)) }, // Multisig Fund
-      { destination: "DcULdzaL51jMapL4o9DVTqvVf3CM3CCHVjeXzfVGp6cT", amount: BigInt(11_250_000 * Math.pow(10, 9)) }, // PDA marketing
-      { destination: "DcULdzaL51jMapL4o9DVTqvVf3CM3CCHVjeXzfVGp6cT", amount: BigInt(3_750_000 * Math.pow(10, 9)) }, //  Multisig marketing
-      { destination: "DcULdzaL51jMapL4o9DVTqvVf3CM3CCHVjeXzfVGp6cT", amount: BigInt(8_000_000 * Math.pow(10, 9)) },  //  PDA Team
-      { destination: "DcULdzaL51jMapL4o9DVTqvVf3CM3CCHVjeXzfVGp6cT", amount: BigInt(2_000_000 * Math.pow(10, 9)) },  //  Multisig Team
-      { destination: "DcULdzaL51jMapL4o9DVTqvVf3CM3CCHVjeXzfVGp6cT", amount: BigInt(5_000_000 * Math.pow(10, 9)) }, // PDA Dao 5M
+      { destination: "", amount: BigInt(30_000_000 * Math.pow(10, 9)) }, // PDA Fund
+      { destination: "DyKDpm6rb4CGMNJQUmmu22PvtohKv9kQWYqHhzXbHjXF", amount: BigInt(10_000_000 * Math.pow(10, 9)) }, // Multisig Fund
+      { destination: "", amount: BigInt(11_250_000 * Math.pow(10, 9)) }, // PDA marketing
+      { destination: "AGgMG32edRjZFTCB63okCoX2HPH4ZKsjBufLTAZjwyZi", amount: BigInt(3_750_000 * Math.pow(10, 9)) }, //  Multisig marketing
+      { destination: "", amount: BigInt(8_000_000 * Math.pow(10, 9)) },  //  PDA Team
+      { destination: "8x2o8wtQ1gCfsjf8bdTQijwXNQbWcD5xtdgXNqTEFrsm", amount: BigInt(2_000_000 * Math.pow(10, 9)) },  //  Multisig Team
+      { destination: "", amount: BigInt(5_000_000 * Math.pow(10, 9)) }, // PDA Dao 5M
   ];
 
   for (const { destination, amount } of distribution) {
