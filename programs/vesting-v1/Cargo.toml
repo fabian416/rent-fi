@@ -1,12 +1,12 @@
 [package]
-name = "vesting-v2"
+name = "vesting-v1"
 version = "0.1.0"
 description = "Created with Anchor"
 edition = "2021"
 
 [lib]
 crate-type = ["cdylib", "lib"]
-name = "vesting_v2"
+name = "vesting_v1"
 
 [features]
 default = []
@@ -15,6 +15,7 @@ no-entrypoint = []
 no-idl = []
 no-log-ix-name = []
 idl-build = ["anchor-lang/idl-build"]
+
 
 [dependencies]
 anchor-lang = "0.30.1"

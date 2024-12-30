@@ -7,6 +7,7 @@ skip-lint = false
 [programs."https://api.devnet.solana.com"]
 cliff-vesting = "F1RHqKoZ8exesFaiip8qos6smpfiHv3AdUCpeJLWtK4C"
 vesting = "6zwP3ZLNrv5jwksK8Eztt7tFt2WYKDqdo5FXQkWv5otc"
+vesting-v1 = "FUig98Z7S6ypR69rF5yHYaWUN41Jvjm7Qnkid8fhDpB3"
 vesting-v2 = "6U1EhFyn2nFpNsxD5Rf6JU1eQeRgBPPv3aET6xZkoF5F"
 vesting-v3 = "8oHzDjuFH8n2oihjqqAq2Bu4L1iUMxYjMUUBcSpgJMzo"
 

@@ -3,13 +3,13 @@ use anchor_lang::prelude::*;
 
 // Initialize the instruction for every account
 #[derive(Accounts)]
-#[instruction(total_tokens: u64, cliff_duration: i64, vesting_duration: i64, beneficiary_pubkey: Pubkey, beneficiary_type: u8)]
+#[instruction(cliff_duration: i64, beneficiary_pubkey: Pubkey)]
 pub struct Initialize<'info> {
     #[account(
         init,
         payer = payer,
         space = 8 + VestingAccount::SIZE,
-        seeds = [b"vesting", beneficiary_pubkey.as_ref(), &beneficiary_type.to_le_bytes()],
+        seeds = [b"vesting-v1", beneficiary_pubkey.as_ref()],
         bump
     )]
     pub vesting_account: Account<'info, VestingAccount>,

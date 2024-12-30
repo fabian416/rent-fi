@@ -21,7 +21,7 @@ pub struct ClaimTokens<'info> {
 
     pub token_program: Program<'info, Token2022>, // Programa SPL Token
 
-    #[account(seeds = [b"vesting", vesting_account.beneficiary.as_ref()], bump)]
+    #[account(seeds = [b"vesting-v1", vesting_account.beneficiary.as_ref()], bump)]
     /// CHECK: This PDA is validated with seeds and bump. No additional validation required here.
     pub program_signer: AccountInfo<'info>, // PDA que actúa como autoridad
 

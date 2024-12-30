@@ -3,7 +3,7 @@ use anchor_lang::prelude::*;
 
 // Initialize the instruction for every account
 #[derive(Accounts)]
-#[instruction(total_tokens: u64, cliff_duration: i64, vesting_duration: i64, beneficiary_pubkey: Pubkey)]
+#[instruction(cliff_duration: i64, beneficiary_pubkey: Pubkey)]
 pub struct Initialize<'info> {
     #[account(
         init,

@@ -14,9 +14,9 @@ import {
     const connection = new Connection(CLUSTER_URL, "confirmed");
   
     // Direcciones relevantes
-    const mintAddress = new PublicKey("8zKNc2RqKSU2TFUXjs2RCELGn8SiJifePrJCTFMjbfoL"); // Mint del token SPL
-    const beneficiaryAddress = new PublicKey("DyKDpm6rb4CGMNJQUmmu22PvtohKv9kQWYqHhzXbHjXF"); // Dirección del propietario
-    const PROGRAM_ID = new PublicKey("6U1EhFyn2nFpNsxD5Rf6JU1eQeRgBPPv3aET6xZkoF5F");
+    const mintAddress = new PublicKey("J4RjmjUPT8HKpx7M8ZjwjBFLrQ2M7Ah9sSsYTq5jYC78"); // Mint del token SPL
+    const beneficiaryAddress = new PublicKey("AGgMG32edRjZFTCB63okCoX2HPH4ZKsjBufLTAZjwyZi"); // Dirección del propietario
+    const PROGRAM_ID = new PublicKey("FUig98Z7S6ypR69rF5yHYaWUN41Jvjm7Qnkid8fhDpB3");
     const [programSigner, bump] = await PublicKey.findProgramAddressSync(
       [Buffer.from("vesting"), beneficiaryAddress.toBuffer()],
       PROGRAM_ID

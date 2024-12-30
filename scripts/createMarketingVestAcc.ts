@@ -8,7 +8,7 @@ dotenv.config();
 
 // Configuración inicial
 const CLUSTER_URL = process.env.CLUSTER_URL || "https://api.devnet.solana.com";
-const PROGRAM_ID = new PublicKey("8oHzDjuFH8n2oihjqqAq2Bu4L1iUMxYjMUUBcSpgJMzo"); // Reemplaza con tu PROGRAM_ID
+const PROGRAM_ID = new PublicKey("FUig98Z7S6ypR69rF5yHYaWUN41Jvjm7Qnkid8fhDpB3"); // Reemplaza con tu PROGRAM_ID
 const WALLET_KEYPAIR_PATH = process.env.WALLET_KEYPAIR_PATH || "Provide a wallety key pair";
 
 // Parámetros de inicialización WE USE THE DECIMALS FACTOR SO WE DONT NEED TO USE IT IN THE CONTRACTS
@@ -32,20 +32,17 @@ const BENEFICIARY_TYPE = 1; // Tipo de beneficiario: Marketing
   anchor.setProvider(provider);
 
   // Cargar el IDL de tu programa
-  const idl = require("../target/idl/vesting_v3.json"); // Cambia el nombre al de tu IDL
+  const idl = require("../target/idl/vesting_v1.json"); // Cambia el nombre al de tu IDL
   const program = new anchor.Program(idl, provider);
   // Crear la cuenta Mint (SPL Token) si no existe
   const mint = new PublicKey("J4RjmjUPT8HKpx7M8ZjwjBFLrQ2M7Ah9sSsYTq5jYC78");
 
   // Dirección del beneficiario
-  const beneficiaryPublicKey = new PublicKey("AGgMG32edRjZFTCB63okCoX2HPH4ZKsjBufLTAZjwyZi"); // Cambia por la dirección real del beneficiario
+  const beneficiaryPublicKey = new PublicKey("81mWBWcomsjKxmNqPzZMrFSbNpu11niSWi844r9Vo1Ub"); // Cambia por la dirección real del beneficiario
 
   // Calcular el PDA para la cuenta de vesting
   const [vestingAccountPDA] = await PublicKey.findProgramAddressSync(
-    [
-      Buffer.from("vesting"),                         // Semilla 1: "vesting"
-      beneficiaryPublicKey.toBuffer(),                // Semilla 2: beneficiary_pubkey  // Semilla 3: beneficiary_type (to_le_bytes)
-    ],
+    [Buffer.from("vesting-v1"), beneficiaryPublicKey.toBuffer()],
     PROGRAM_ID
   );
 
