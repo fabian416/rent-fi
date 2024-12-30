@@ -33,20 +33,9 @@ pub fn claim_fund(ctx: Context<ClaimTokens>) -> Result<()> {
     let now = Clock::get()?.unix_timestamp;
 
     let program_id = *ctx.program_id;
-    let (program_signer, bump) = Pubkey::find_program_address(
-        &[
-            b"vesting",
-            beneficiary.as_ref(),
-            &beneficiary_type.to_le_bytes(),
-        ],
-        &program_id,
-    );
-    let seeds: &[&[u8]] = &[
-        b"vesting",
-        beneficiary.as_ref(),
-        &beneficiary_type.to_le_bytes(),
-        &[bump],
-    ];
+    let (program_signer, bump) =
+        Pubkey::find_program_address(&[b"vesting", beneficiary.as_ref()], &program_id);
+    let seeds: &[&[u8]] = &[b"vesting", beneficiary.as_ref(), &[bump]];
     let signer_seeds: &[&[&[u8]]] = &[seeds];
 
     // Validamos que el beneficiario esté intentando reclamar desde su ATA

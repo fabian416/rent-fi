@@ -8,13 +8,11 @@ dotenv.config();
 
 // Configuración inicial
 const CLUSTER_URL = process.env.CLUSTER_URL || "https://api.devnet.solana.com";
-const PROGRAM_ID = new PublicKey("6U1EhFyn2nFpNsxD5Rf6JU1eQeRgBPPv3aET6xZkoF5F"); // Reemplaza con tu PROGRAM_ID
+const PROGRAM_ID = new PublicKey("8oHzDjuFH8n2oihjqqAq2Bu4L1iUMxYjMUUBcSpgJMzo"); // Reemplaza con tu PROGRAM_ID
 const WALLET_KEYPAIR_PATH = process.env.WALLET_KEYPAIR_PATH || "Provide a wallety key pair";
 
 // Parámetros de inicialización WE USE THE DECIMALS FACTOR SO WE DONT NEED TO USE IT IN THE CONTRACTS
-const TOTAL_TOKENS = new anchor.BN(150_000_000 * 10 ** 9); // Tokens totales (para Marketing) elevando para lograr 9 decimales
-const CLIFF_DURATION = new anchor.BN(3 * 30 * 24 * 60 * 60); // Cliff en segundos
-const VESTING_DURATION = new anchor.BN(12 * 30 * 24 * 60 * 60); // Vesting lineal en segundos
+const CLIFF_DURATION = new anchor.BN(3 * 60 * 60); // for PROD const CLIFF_DURATION = new anchor.BN(3 * 30 * 24 * 60 * 60); // Cliff en segundos
 const BENEFICIARY_TYPE = 1; // Tipo de beneficiario: Marketing
 
 (async () => {
@@ -34,17 +32,21 @@ const BENEFICIARY_TYPE = 1; // Tipo de beneficiario: Marketing
   anchor.setProvider(provider);
 
   // Cargar el IDL de tu programa
-  const idl = require("../target/idl/vesting_v2.json"); // Cambia el nombre al de tu IDL
+  const idl = require("../target/idl/vesting_v3.json"); // Cambia el nombre al de tu IDL
   const program = new anchor.Program(idl, provider);
   // Crear la cuenta Mint (SPL Token) si no existe
-  const mint = new PublicKey("8zKNc2RqKSU2TFUXjs2RCELGn8SiJifePrJCTFMjbfoL");
+  const mint = new PublicKey("J4RjmjUPT8HKpx7M8ZjwjBFLrQ2M7Ah9sSsYTq5jYC78");
 
   // Dirección del beneficiario
-  const beneficiaryPublicKey = new PublicKey("DyKDpm6rb4CGMNJQUmmu22PvtohKv9kQWYqHhzXbHjXF"); // Cambia por la dirección real del beneficiario
+  const beneficiaryPublicKey = new PublicKey("AGgMG32edRjZFTCB63okCoX2HPH4ZKsjBufLTAZjwyZi"); // Cambia por la dirección real del beneficiario
 
   // Calcular el PDA para la cuenta de vesting
   const [vestingAccountPDA] = await PublicKey.findProgramAddressSync(
-    [Buffer.from("vesting"), beneficiaryPublicKey.toBuffer()],
+    [
+      Buffer.from("vesting"),                         // Semilla 1: "vesting"
+      beneficiaryPublicKey.toBuffer(),                // Semilla 2: beneficiary_pubkey
+      Buffer.from(Uint8Array.of(...new anchor.BN(BENEFICIARY_TYPE).toArray("le", 8)))  // Semilla 3: beneficiary_type (to_le_bytes)
+    ],
     PROGRAM_ID
   );
 
@@ -53,9 +55,7 @@ const BENEFICIARY_TYPE = 1; // Tipo de beneficiario: Marketing
   // @ts-ignore
   const tx = await program.methods
     .initialize(
-      TOTAL_TOKENS,
       CLIFF_DURATION,
-      VESTING_DURATION,
       beneficiaryPublicKey,
       BENEFICIARY_TYPE,
       mint

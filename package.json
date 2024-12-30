@@ -3,7 +3,7 @@
   "scripts": {
     "decode-data": "npx ts-node scripts/decodeData.ts",
     "get-ata": "npx ts-node scripts/getATA.ts",
-    "initialize-vesting": "npx ts-node scripts/createVestingAcc.ts",
+    "initialize-marketing": "npx ts-node scripts/createMarketingVestAcc.ts",
     "transfer-tokens": "npx ts-node scripts/transferTokens.ts",
     "claim-marketing": "npx ts-node scripts/claimMarketing.ts",
     "deploy": "npx ts-node scripts/index.ts",
