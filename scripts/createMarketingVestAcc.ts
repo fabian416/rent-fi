@@ -44,8 +44,7 @@ const BENEFICIARY_TYPE = 1; // Tipo de beneficiario: Marketing
   const [vestingAccountPDA] = await PublicKey.findProgramAddressSync(
     [
       Buffer.from("vesting"),                         // Semilla 1: "vesting"
-      beneficiaryPublicKey.toBuffer(),                // Semilla 2: beneficiary_pubkey
-      Buffer.from(Uint8Array.of(...new anchor.BN(BENEFICIARY_TYPE).toArray("le", 8)))  // Semilla 3: beneficiary_type (to_le_bytes)
+      beneficiaryPublicKey.toBuffer(),                // Semilla 2: beneficiary_pubkey  // Semilla 3: beneficiary_type (to_le_bytes)
     ],
     PROGRAM_ID
   );
