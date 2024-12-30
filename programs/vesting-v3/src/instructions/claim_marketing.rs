@@ -70,7 +70,7 @@ pub fn claim_marketing(ctx: Context<ClaimTokens>) -> Result<()> {
 
     const QUARTERLY_RELEASE: u64 = 1_410_000; // Amount of toknes ot be released at the end of every quarter
     const TOTAL_VESTING_PERIOD: u64 = 24;
-    const QUARTERS_IN_SECONDS: i64 = 60 * 60 * 24 * 30 * 3;
+    const QUARTERS_IN_SECONDS: i64 = 60 * 60 * 3; // const QUARTERS_IN_SECONDS: i64 = 60 * 60 * 24 * 30 * 3;
 
     let mut available_tokens: u64 = 0;
 
