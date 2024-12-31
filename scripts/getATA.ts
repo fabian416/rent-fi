@@ -15,10 +15,10 @@ import {
   
     // Direcciones relevantes
     const mintAddress = new PublicKey("J4RjmjUPT8HKpx7M8ZjwjBFLrQ2M7Ah9sSsYTq5jYC78"); // Mint del token SPL
-    const beneficiaryAddress = new PublicKey("AGgMG32edRjZFTCB63okCoX2HPH4ZKsjBufLTAZjwyZi"); // Dirección del propietario
+    const beneficiaryAddress = new PublicKey("81mWBWcomsjKxmNqPzZMrFSbNpu11niSWi844r9Vo1Ub"); // Dirección del propietario
     const PROGRAM_ID = new PublicKey("FUig98Z7S6ypR69rF5yHYaWUN41Jvjm7Qnkid8fhDpB3");
     const [programSigner, bump] = await PublicKey.findProgramAddressSync(
-      [Buffer.from("vesting"), beneficiaryAddress.toBuffer()],
+      [Buffer.from("vesting-v1"), beneficiaryAddress.toBuffer()],
       PROGRAM_ID
     );
 

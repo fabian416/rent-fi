@@ -3,6 +3,7 @@
   "scripts": {
     "decode-data": "npx ts-node scripts/decodeData.ts",
     "get-ata": "npx ts-node scripts/getATA.ts",
+    "get-pda-ata": "npx ts-node scripts/getPdaAta.ts",
     "initialize-marketing": "npx ts-node scripts/createMarketingVestAcc.ts",
     "initialize-dao": "npx ts-node scripts/createDaoVestAcc.ts",
     "initialize-fund": "npx ts-node scripts/createFundVestAcc.ts",

@@ -3,7 +3,7 @@ import {
   Keypair,
   PublicKey,
   SystemProgram,
-  Transaction,
+  Transaction
 } from '@solana/web3.js';
 
 import {
@@ -14,6 +14,8 @@ import {
   TYPE_SIZE,
   LENGTH_SIZE,
   TOKEN_2022_PROGRAM_ID,
+
+  ASSOCIATED_TOKEN_PROGRAM_ID,
   createInitializeTransferFeeConfigInstruction,
   createInitializeMetadataPointerInstruction,
   harvestWithheldTokensToMint,
@@ -21,7 +23,8 @@ import {
   withdrawWithheldTokensFromMint,
   createAssociatedTokenAccountIdempotent,
   setAuthority,
-  AuthorityType
+  AuthorityType,
+  createAssociatedTokenAccount
 } from '@solana/spl-token';
 
 import * as anchor from '@coral-xyz/anchor';
@@ -151,26 +154,28 @@ export async function mintAndDistributeTokens() {
   // Destination test account addresses 4 PDAs 4 Multisigs
   const distribution = [
       { destination: "DcULdzaL51jMapL4o9DVTqvVf3CM3CCHVjeXzfVGp6cT", amount: BigInt(30_000_000 * Math.pow(10, 9)) }, // 30% Liquidity multisig
-      { destination: "", amount: BigInt(30_000_000 * Math.pow(10, 9)) }, // PDA Fund
+      { destination: "3xp2vVJDuZkm3hm3H6RLzZhF31ToPqPGh5vpEEhPGcaY", amount: BigInt(30_000_000 * Math.pow(10, 9)) }, // PDA Fund
       { destination: "DyKDpm6rb4CGMNJQUmmu22PvtohKv9kQWYqHhzXbHjXF", amount: BigInt(10_000_000 * Math.pow(10, 9)) }, // Multisig Fund
-      { destination: "", amount: BigInt(11_250_000 * Math.pow(10, 9)) }, // PDA marketing
-      { destination: "AGgMG32edRjZFTCB63okCoX2HPH4ZKsjBufLTAZjwyZi", amount: BigInt(3_750_000 * Math.pow(10, 9)) }, //  Multisig marketing
-      { destination: "", amount: BigInt(8_000_000 * Math.pow(10, 9)) },  //  PDA Team
+      { destination: "E23vT7Lc2q1iUExcrgqGcs4RZGgPqG1NbRuXQ8MEV7qz", amount: BigInt(11_250_000 * Math.pow(10, 9)) }, // PDA marketing
+      { destination: "81mWBWcomsjKxmNqPzZMrFSbNpu11niSWi844r9Vo1Ub", amount: BigInt(3_750_000 * Math.pow(10, 9)) }, //  Multisig marketing
+      { destination: "FG9G2xU7FSaUvxTBF1WtxuZkLEiABv1vfv8prQtfLT1L", amount: BigInt(8_000_000 * Math.pow(10, 9)) },  //  PDA Team
       { destination: "8x2o8wtQ1gCfsjf8bdTQijwXNQbWcD5xtdgXNqTEFrsm", amount: BigInt(2_000_000 * Math.pow(10, 9)) },  //  Multisig Team
-      { destination: "", amount: BigInt(5_000_000 * Math.pow(10, 9)) }, // PDA Dao 5M
+      { destination: "BRRFwentT7oVn448AU4t9yYGKP1k7pUtGwSef1Be1PkL", amount: BigInt(5_000_000 * Math.pow(10, 9)) }, // PDA Dao 5M
   ];
 
   for (const { destination, amount } of distribution) {
       const destinationPublicKey = new PublicKey(destination);
 
       // Create or use the associated account
-      const destinationAccount = await createAssociatedTokenAccountIdempotent(
-          connection,
-          payer,
-          mintPublicKey,
-          destinationPublicKey,
-          {},
-          TOKEN_2022_PROGRAM_ID
+      const destinationAccount = await createAssociatedTokenAccount(
+        connection,
+        payer,                         // Wallet que paga la transacción
+        mintPublicKey,                 // Token SPL (mint)
+        destinationPublicKey,                    // PDA (propietario del ATA)
+        undefined,                     // Opciones de confirmación (opcional)
+        TOKEN_2022_PROGRAM_ID,         // Programa de token (Token 2022)
+        ASSOCIATED_TOKEN_PROGRAM_ID,   // Programa ATA
+        true         
       );
 
       // Mint tokens to associated account

@@ -12,7 +12,7 @@ const PROGRAM_ID = new PublicKey("FUig98Z7S6ypR69rF5yHYaWUN41Jvjm7Qnkid8fhDpB3")
 const WALLET_KEYPAIR_PATH = process.env.WALLET_KEYPAIR_PATH || "Provide a wallety key pair";
 
 // Parámetros de inicialización WE USE THE DECIMALS FACTOR SO WE DONT NEED TO USE IT IN THE CONTRACTS
-const CLIFF_DURATION = new anchor.BN(3 * 60 * 60); // for PROD const CLIFF_DURATION = new anchor.BN(3 * 30 * 24 * 60 * 60); // Cliff en segundos
+const CLIFF_DURATION = new anchor.BN(60 * 30 * 3); // for PROD const CLIFF_DURATION = new anchor.BN(3 * 30 * 24 * 60 * 60); // Cliff en segundos
 const BENEFICIARY_TYPE = 1; // Tipo de beneficiario: Marketing
 
 (async () => {
