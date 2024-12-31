@@ -38,7 +38,7 @@ const BENEFICIARY_TYPE = 1; // Tipo de beneficiario: Marketing
   const mint = new PublicKey("J4RjmjUPT8HKpx7M8ZjwjBFLrQ2M7Ah9sSsYTq5jYC78");
 
   // Dirección del beneficiario
-  const beneficiaryPublicKey = new PublicKey("81mWBWcomsjKxmNqPzZMrFSbNpu11niSWi844r9Vo1Ub"); // Cambia por la dirección real del beneficiario
+  const beneficiaryPublicKey = new PublicKey("6icMpGvjgfQJorCqAb1Mcpkp6RbfWMB11ukWeihC2Whq"); // Cambia por la dirección real del beneficiario
 
   // Calcular el PDA para la cuenta de vesting
   const [vestingAccountPDA] = await PublicKey.findProgramAddressSync(

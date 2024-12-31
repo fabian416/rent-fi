@@ -100,7 +100,7 @@ pub fn claim_marketing(ctx: Context<ClaimTokens>) -> Result<()> {
                 },
                 signer_seeds,
             ),
-            releasable * 10u64.pow(9),
+            releasable,
             9,
         )?;
         msg!("Released {} tokens for Marketing", releasable);
