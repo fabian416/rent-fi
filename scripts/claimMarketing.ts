@@ -13,7 +13,6 @@ const CLUSTER_URL = process.env.CLUSTER_URL || "https://api.devnet.solana.com";
 const WALLET_KEYPAIR_PATH = process.env.WALLET_KEYPAIR_PATH || "Provide a wallety key pair";
 
 const main = async () => {
-
   const connection = new anchor.web3.Connection(CLUSTER_URL, "confirmed");
   dotenv.config();
   const private_key = process.env.SOLANA_PRIVATE_KEY;
@@ -52,7 +51,7 @@ const main = async () => {
     // Beneficiario
     const beneficiary = new PublicKey("81mWBWcomsjKxmNqPzZMrFSbNpu11niSWi844r9Vo1Ub");
 
-    // ATA of the PDA 
+    // ATA of the PDA entocnes como podriamos aacabar con loq eyestmao haciendo 
     const pdaTokenAccount = new PublicKey("4VftGsXsUhYJDj53KGEgHXzSeR5usqzA65KvGdXGM95h"); // Owner of this account has to be VestingAccountPda 
 
     const [programSigner] = await PublicKey.findProgramAddressSync(
