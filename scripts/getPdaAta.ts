@@ -9,7 +9,7 @@ import {
 
   // Parámteros:
   const mintAddress = new PublicKey("J4RjmjUPT8HKpx7M8ZjwjBFLrQ2M7Ah9sSsYTq5jYC78");  // Token SPL
-  const programSigner = new PublicKey("E23vT7Lc2q1iUExcrgqGcs4RZGgPqG1NbRuXQ8MEV7qz");  // PDA del vesting
+  const programSigner = new PublicKey("6icMpGvjgfQJorCqAb1Mcpkp6RbfWMB11ukWeihC2Whq");  // PDA del vesting
   
   // Calcular el ATA del PDA (pdaTokenAccount)
   const pdaTokenAccount = getAssociatedTokenAddressSync(
