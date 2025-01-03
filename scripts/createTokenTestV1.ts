@@ -126,7 +126,7 @@ import {
     const initializeTransferFeeConfig =
     createInitializeTransferFeeConfigInstruction(
       mint, // Mint Account address
-      transferFeeConfigAuthority.publicKey, // Authority to update fees
+      null, // Authority to update fees
       multisigBeneficiary, // Authority to withdraw fees
       feeBasisPoints, // Basis points for transfer fee calculation // Maximum fee per transfer
       maxFee,
