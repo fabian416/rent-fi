@@ -60,9 +60,9 @@ import {
     const metaData: TokenMetadata = {
       updateAuthority: mintAuthority.publicKey,
       mint: mint,
-      name: 'BrettSol',
-      symbol: 'BTS',
-      uri: 'https://ipfs.io/ipfs/bafkreig3guhf6dqjsscenjeg7nzriq5j7pregolbnm5onik3dxrc62xyqu?filename=token.json',
+      name: 'Loft',
+      symbol: 'LOFT',
+      uri: 'https://ipfs.io/ipfs/bafkreiamdsoutoie3bhi3swu4xwwzl24qzqcfmxi3hvhm6r7ivxpdmm6ki?filename=tokenTestV1.json',
       additionalMetadata: [['', '']],
     };
   
@@ -83,7 +83,7 @@ import {
       mintLen + metadataExtension + metadataLen,
     );
     // 100 million aiming to not use it max Fee at all
-    const maxFee =  BigInt(100_000_000 * Math.pow(10, 9))
+    const maxFee =  BigInt(1_000_000 * Math.pow(10, 9))
   
     // Instruction to invoke System Program to create new account
     const createAccountInstruction = SystemProgram.createAccount({
@@ -121,12 +121,13 @@ import {
       symbol: metaData.symbol,
       uri: metaData.uri,
     });
+    const multisigBeneficiary = new PublicKey("5i2hAe3MtpuArGjKoW3BDUP71HZEcuerGiibXoYjDi2R");
     
     const initializeTransferFeeConfig =
     createInitializeTransferFeeConfigInstruction(
       mint, // Mint Account address
       transferFeeConfigAuthority.publicKey, // Authority to update fees
-      withdrawWithheldAuthority.publicKey, // Authority to withdraw fees
+      multisigBeneficiary, // Authority to withdraw fees
       feeBasisPoints, // Basis points for transfer fee calculation // Maximum fee per transfer
       maxFee,
       TOKEN_2022_PROGRAM_ID, // Token Extension Program ID
@@ -157,7 +158,7 @@ import {
     console.log("Minting and distributing tokens...");
   
     // Mint Address
-    const mintAddress = "5tHzov3V7aGt9i4bze61jEo72fGM7mdypNEggq9F8dRj";
+    const mintAddress = "";
     const mintPublicKey = new PublicKey(mintAddress);
   
     // Destination test account addresses 4 PDAs 4 Multisigs

@@ -71,6 +71,7 @@ export async function createNewToken() {
   // Size of metadata
   const metadataLen = pack(metaData).length;
   const extensions = [
+    ExtensionType.TransferFeeConfig,
     ExtensionType.MetadataPointer,
   ];
 
@@ -82,8 +83,8 @@ export async function createNewToken() {
     mintLen + metadataExtension + metadataLen,
   );
   // 100 million aiming to not use it max Fee at all
-  const maxFee =  BigInt(100_000_000 * Math.pow(10, 9))
-
+  const maxFee =  BigInt(1_000_000 * Math.pow(10, 9))
+  
   // Instruction to invoke System Program to create new account
   const createAccountInstruction = SystemProgram.createAccount({
     fromPubkey: payer.publicKey, // Account that will transfer lamports to created account
