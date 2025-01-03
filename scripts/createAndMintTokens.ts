@@ -52,9 +52,6 @@ export async function createNewToken() {
   const mintKeypair = Keypair.generate();
   const mint = mintKeypair.publicKey;
   console.log("Mint public Key is: ", mint);
-  const freezeAcc = Keypair.generate();
-  const freeze = freezeAcc.publicKey;
-
 
   // Fee basis points for transfers (100 = 1%)
   const feeBasisPoints = 100;
@@ -108,7 +105,7 @@ export async function createNewToken() {
     mint, // Mint Account Address
     decimals, // Decimals of Mint
     mintAuthority.publicKey, // Designated Mint Authority
-    freeze, // Optional Freeze Authority
+    null, // Optional Freeze Authority
     TOKEN_2022_PROGRAM_ID, // Token Extension Program ID
   );
 
