@@ -158,7 +158,7 @@ import {
     console.log("Minting and distributing tokens...");
   
     // Mint Address
-    const mintAddress = "";
+    const mintAddress = "GiYPuQkG7UHvxpb8oc2R4KYmhh5Uueu6m3EB1URMsDwq";
     const mintPublicKey = new PublicKey(mintAddress);
   
     // Destination test account addresses 4 PDAs 4 Multisigs

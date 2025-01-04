@@ -6,7 +6,7 @@ dotenv.config();
 
 async function main() {
     // Create new token
-  // await createNewTokenMainTest();
+ //  await createNewTokenMainTest();
     // Mint and distribute 1 billion tokens
   await mintAndDistributeTokensMainTest(); 
 }
