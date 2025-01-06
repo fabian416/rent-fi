@@ -122,9 +122,21 @@ export async function createNewToken() {
     uri: metaData.uri,
   });
 
+  const multisigBeneficiary = new PublicKey("5i2hAe3MtpuArGjKoW3BDUP71HZEcuerGiibXoYjDi2R");
+    
+  const initializeTransferFeeConfig =
+  createInitializeTransferFeeConfigInstruction(
+    mint, // Mint Account address
+    null, // Authority to update fees
+    multisigBeneficiary, // Authority to withdraw fees
+    feeBasisPoints, // Basis points for transfer fee calculation // Maximum fee per transfer
+    maxFee,
+    TOKEN_2022_PROGRAM_ID, // TokenčExtension Program ID
+  );
   const transaction = new Transaction().add(
     createAccountInstruction,
     initializeMetadataPointerInstruction,
+    initializeTransferFeeConfig,
     // note: the above instructions are required before initializing the mint
     initializeMintInstruction,
     initializeMetadataInstruction,
