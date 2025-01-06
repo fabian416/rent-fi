@@ -55,8 +55,9 @@ export async function createNewToken() {
     name: 'RentFi',
     symbol: 'RENT',
     // in order to deploy we need to change it for production
-    uri: 'https://ipfs.io/ipfs/QmSom9agZurpjLV1uECMLMZr5fDUSdE12pmvVBZKSvUjbX?filename=happy-monkey.json',
-    additionalMetadata: [['RentFi', 'Real State Solutions']],
+    uri: '',
+    // real state cuzotmize solutions
+    additionalMetadata: [['', '']],
   };
 
   const metadataExtension = TYPE_SIZE + LENGTH_SIZE;
