@@ -18,10 +18,6 @@ import {
   ASSOCIATED_TOKEN_PROGRAM_ID,
   createInitializeTransferFeeConfigInstruction,
   createInitializeMetadataPointerInstruction,
-  harvestWithheldTokensToMint,
-  transferCheckedWithFee,
-  withdrawWithheldTokensFromMint,
-  createAssociatedTokenAccountIdempotent,
   setAuthority,
   AuthorityType,
   createAssociatedTokenAccount
@@ -31,9 +27,7 @@ import * as anchor from '@coral-xyz/anchor';
 import { generateExplorerTxUrl } from './explorer';
 import {
   payer,
-  mintAuthority,
-  transferFeeConfigAuthority,
-  withdrawWithheldAuthority,
+  mintAuthority
 } from './keys';
 import {
   createInitializeInstruction,
@@ -62,6 +56,7 @@ export async function createNewToken() {
     mint: mint,
     name: 'RentFi',
     symbol: 'RENT',
+    // in order to deploy we need to change it for production
     uri: 'https://ipfs.io/ipfs/QmSom9agZurpjLV1uECMLMZr5fDUSdE12pmvVBZKSvUjbX?filename=happy-monkey.json',
     additionalMetadata: [['RentFi', 'Real State Solutions']],
   };
@@ -121,8 +116,8 @@ export async function createNewToken() {
     symbol: metaData.symbol,
     uri: metaData.uri,
   });
-
-  const multisigBeneficiary = new PublicKey("5i2hAe3MtpuArGjKoW3BDUP71HZEcuerGiibXoYjDi2R");
+  //
+  const multisigBeneficiary = new PublicKey("");
     
   const initializeTransferFeeConfig =
   createInitializeTransferFeeConfigInstruction(
