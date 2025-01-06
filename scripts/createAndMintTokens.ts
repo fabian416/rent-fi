@@ -22,8 +22,6 @@ import {
   AuthorityType,
   createAssociatedTokenAccount
 } from '@solana/spl-token';
-
-import * as anchor from '@coral-xyz/anchor';
 import { generateExplorerTxUrl } from './explorer';
 import {
   payer,
