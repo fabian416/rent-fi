@@ -18,22 +18,15 @@ import {
     ASSOCIATED_TOKEN_PROGRAM_ID,
     createInitializeTransferFeeConfigInstruction,
     createInitializeMetadataPointerInstruction,
-    harvestWithheldTokensToMint,
-    transferCheckedWithFee,
-    withdrawWithheldTokensFromMint,
-    createAssociatedTokenAccountIdempotent,
     setAuthority,
     AuthorityType,
     createAssociatedTokenAccount
   } from '@solana/spl-token';
-  
-  import * as anchor from '@coral-xyz/anchor';
+
   import { generateExplorerTxUrl } from './explorer';
   import {
     payer,
-    mintAuthority,
-    transferFeeConfigAuthority,
-    withdrawWithheldAuthority,
+    mintAuthority
   } from './keys';
   import {
     createInitializeInstruction,
@@ -130,7 +123,7 @@ import {
       multisigBeneficiary, // Authority to withdraw fees
       feeBasisPoints, // Basis points for transfer fee calculation // Maximum fee per transfer
       maxFee,
-      TOKEN_2022_PROGRAM_ID, // Token Extension Program ID
+      TOKEN_2022_PROGRAM_ID, // TokenčExtension Program ID
     );
 
     const transaction = new Transaction().add(
