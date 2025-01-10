@@ -212,4 +212,3 @@ import {
       generateExplorerTxUrl(connection, disableAuthoritySig)
     );
   }
-  
