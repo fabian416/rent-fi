@@ -14,8 +14,8 @@ import {
     const connection = new Connection(CLUSTER_URL, "confirmed");
   
     // Direcciones relevantes
-    const mintAddress = new PublicKey("J4RjmjUPT8HKpx7M8ZjwjBFLrQ2M7Ah9sSsYTq5jYC78"); // Mint del token SPL
-    const beneficiaryAddress = new PublicKey("81mWBWcomsjKxmNqPzZMrFSbNpu11niSWi844r9Vo1Ub"); // Dirección del propietario
+    const mintAddress = new PublicKey("FMjNwsbDcmNJc9hCn6ysFzAVQGG8ssfF28AitmsxCMxn"); // Mint del token SPL
+    const beneficiaryAddress = new PublicKey("D3BfHFDk7fpthnQ2wkjEkM63aW4D495MRM5CJZ5huTnp"); // Dirección del propietario
     const PROGRAM_ID = new PublicKey("FUig98Z7S6ypR69rF5yHYaWUN41Jvjm7Qnkid8fhDpB3");
     const [programSigner, bump] = await PublicKey.findProgramAddressSync(
       [Buffer.from("vesting-v1"), beneficiaryAddress.toBuffer()],
@@ -25,7 +25,7 @@ import {
     console.log("programSigner, bump", programSigner, bump);
   
     // Permitir propietarios off-curve si es un PDA
-    const allowOwnerOffCurve = true;
+    const allowOwnerOffCurve = false;
   
     // Opcional: Si estás usando un programa de tokens diferente (como Token 2022)
     const programId = TOKEN_2022_PROGRAM_ID; // O usa TOKEN_2022_PROGRAM_ID

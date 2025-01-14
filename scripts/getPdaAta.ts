@@ -8,8 +8,8 @@ import {
   } from "@solana/web3.js";
 
   // Parámteros:
-  const mintAddress = new PublicKey("J4RjmjUPT8HKpx7M8ZjwjBFLrQ2M7Ah9sSsYTq5jYC78");  // Token SPL
-  const programSigner = new PublicKey("6icMpGvjgfQJorCqAb1Mcpkp6RbfWMB11ukWeihC2Whq");  // PDA del vesting
+  const mintAddress = new PublicKey("FMjNwsbDcmNJc9hCn6ysFzAVQGG8ssfF28AitmsxCMxn");  // Token SPL
+  const programSigner = new PublicKey("DP2Jv7RBXKzQX6S9p9AUBhuVtgEaNa8H2zEDKrEASvCW");  // PDA del vesting
   
   // Calcular el ATA del PDA (pdaTokenAccount)
   const pdaTokenAccount = getAssociatedTokenAddressSync(

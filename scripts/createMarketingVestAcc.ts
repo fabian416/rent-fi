@@ -35,10 +35,10 @@ const BENEFICIARY_TYPE = 1; // Tipo de beneficiario: Marketing
   const idl = require("../target/idl/vesting_v1.json"); // Cambia el nombre al de tu IDL
   const program = new anchor.Program(idl, provider);
   // Crear la cuenta Mint (SPL Token) si no existe
-  const mint = new PublicKey("J4RjmjUPT8HKpx7M8ZjwjBFLrQ2M7Ah9sSsYTq5jYC78");
+  const mint = new PublicKey("FMjNwsbDcmNJc9hCn6ysFzAVQGG8ssfF28AitmsxCMxn");
 
   // Dirección del beneficiario
-  const beneficiaryPublicKey = new PublicKey("6icMpGvjgfQJorCqAb1Mcpkp6RbfWMB11ukWeihC2Whq"); // Cambia por la dirección real del beneficiario
+  const beneficiaryPublicKey = new PublicKey("D3BfHFDk7fpthnQ2wkjEkM63aW4D495MRM5CJZ5huTnp"); // Cambia por la dirección real del beneficiario
 
   // Calcular el PDA para la cuenta de vesting
   const [vestingAccountPDA] = await PublicKey.findProgramAddressSync(

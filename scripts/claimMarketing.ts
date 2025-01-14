@@ -40,19 +40,19 @@ const main = async () => {
 
 
     // Dirección del PDA (vesting account)
-    const vestingAccountPDA = new PublicKey("3XE29f2naxAAsMPET1PKFPdPvQEzzMEXq5x3gXXSYDGH"); // PDA generated from the initialize function
+    const vestingAccountPDA = new PublicKey("DP2Jv7RBXKzQX6S9p9AUBhuVtgEaNa8H2zEDKrEASvCW"); // PDA generated from the initialize function
 
     // beneficiary ATA
-    const beneficiaryAta = new PublicKey("Fe4Am3utbyzV1JkQaCciKNZJRGrmrkjsqYTCG2B8CLBk");
+    const beneficiaryAta = new PublicKey("EU4Lj4iB2XpzzBFNptfirfdxWa5VogyX819nqgnYXXuG");
 
     // Public key of the mint address
-    const mintAddress = new PublicKey("J4RjmjUPT8HKpx7M8ZjwjBFLrQ2M7Ah9sSsYTq5jYC78") 
+    const mintAddress = new PublicKey("FMjNwsbDcmNJc9hCn6ysFzAVQGG8ssfF28AitmsxCMxn") 
 
     // Beneficiario
-    const beneficiary = new PublicKey("6icMpGvjgfQJorCqAb1Mcpkp6RbfWMB11ukWeihC2Whq");
+    const beneficiary = new PublicKey("D3BfHFDk7fpthnQ2wkjEkM63aW4D495MRM5CJZ5huTnp");
 
-    // ATA of the PDA entocnes como podriamos aacabar con loq eyestmao haciendo 
-    const pdaTokenAccount = new PublicKey("DHMK6MeXzwY5bULXHDgiqPfLt6S88LTLTovcMBK6hmag"); // Owner of this account has to be VestingAccountPda 
+    // ATA of the PDA 
+    const pdaTokenAccount = new PublicKey("3VJGjKz9FrqnL1LmGW3Pem3rmiGHRTFoxwhmDezqKkQA"); // Owner of this account has to be VestingAccountPda 
 
     const [programSigner] = await PublicKey.findProgramAddressSync(
       [Buffer.from("vesting-v1"), beneficiary.toBuffer()],
