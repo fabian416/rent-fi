@@ -58,7 +58,7 @@ pub fn claim_team(ctx: Context<ClaimTokens>) -> Result<()> {
 
     const QUARTERLY_RELEASE: u64 = 1_000_000; // Amount of toknes ot be released at the end of every quarter
     const TOTAL_VESTING_PERIOD: u64 = 24;
-    const QUARTERS_IN_SECONDS: i64 = 60 * 60 * 3; // for Production const QUARTERS_IN_SECONDS: i64 = 60 * 60 * 24 * 30 * 3;
+    const QUARTERS_IN_SECONDS: i64 = 60 * 10 * 3; // for Production const QUARTERS_IN_SECONDS: i64 = 60 * 60 * 24 * 30 * 3;
 
     let mut available_tokens: u64 = 0;
 
