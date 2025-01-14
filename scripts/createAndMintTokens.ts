@@ -22,6 +22,7 @@ import {
   AuthorityType,
   createAssociatedTokenAccount
 } from '@solana/spl-token';
+
 import { generateExplorerTxUrl } from './explorer';
 import {
   payer,
@@ -54,9 +55,7 @@ export async function createNewToken() {
     mint: mint,
     name: 'RentFi',
     symbol: 'RENT',
-    // in order to deploy we need to change it for production
-    uri: '',
-    // real state cuzotmize solutions
+    uri: 'https://ipfs.io/ipfs/bafkreiaat5ul2mt6x6usecjfn4ujbggc7r2qrgbd6nnmjyhywovpdjrwpe?filename=tokenTestV1-2.json',
     additionalMetadata: [['', '']],
   };
 
@@ -78,7 +77,7 @@ export async function createNewToken() {
   );
   // 100 million aiming to not use it max Fee at all
   const maxFee =  BigInt(1_000_000 * Math.pow(10, 9))
-  
+
   // Instruction to invoke System Program to create new account
   const createAccountInstruction = SystemProgram.createAccount({
     fromPubkey: payer.publicKey, // Account that will transfer lamports to created account
@@ -115,9 +114,8 @@ export async function createNewToken() {
     symbol: metaData.symbol,
     uri: metaData.uri,
   });
-  //
-  const multisigBeneficiary = new PublicKey("");
-    
+  const multisigBeneficiary = new PublicKey("5i2hAe3MtpuArGjKoW3BDUP71HZEcuerGiibXoYjDi2R");
+  
   const initializeTransferFeeConfig =
   createInitializeTransferFeeConfigInstruction(
     mint, // Mint Account address
@@ -127,6 +125,7 @@ export async function createNewToken() {
     maxFee,
     TOKEN_2022_PROGRAM_ID, // TokenčExtension Program ID
   );
+
   const transaction = new Transaction().add(
     createAccountInstruction,
     initializeMetadataPointerInstruction,
@@ -152,19 +151,13 @@ export async function mintAndDistributeTokens() {
   console.log("Minting and distributing tokens...");
 
   // Mint Address
-  const mintAddress = "J4RjmjUPT8HKpx7M8ZjwjBFLrQ2M7Ah9sSsYTq5jYC78";
+  const mintAddress = "FMjNwsbDcmNJc9hCn6ysFzAVQGG8ssfF28AitmsxCMxn";
   const mintPublicKey = new PublicKey(mintAddress);
 
   // Destination test account addresses 4 PDAs 4 Multisigs
   const distribution = [
-      { destination: "DcULdzaL51jMapL4o9DVTqvVf3CM3CCHVjeXzfVGp6cT", amount: BigInt(30_000_000 * Math.pow(10, 9)) }, // 30% Liquidity multisig
-      { destination: "3xp2vVJDuZkm3hm3H6RLzZhF31ToPqPGh5vpEEhPGcaY", amount: BigInt(30_000_000 * Math.pow(10, 9)) }, // PDA Fund
-      { destination: "DyKDpm6rb4CGMNJQUmmu22PvtohKv9kQWYqHhzXbHjXF", amount: BigInt(10_000_000 * Math.pow(10, 9)) }, // Multisig Fund
-      { destination: "E23vT7Lc2q1iUExcrgqGcs4RZGgPqG1NbRuXQ8MEV7qz", amount: BigInt(11_250_000 * Math.pow(10, 9)) }, // PDA marketing
-      { destination: "81mWBWcomsjKxmNqPzZMrFSbNpu11niSWi844r9Vo1Ub", amount: BigInt(3_750_000 * Math.pow(10, 9)) }, //  Multisig marketing
-      { destination: "FG9G2xU7FSaUvxTBF1WtxuZkLEiABv1vfv8prQtfLT1L", amount: BigInt(8_000_000 * Math.pow(10, 9)) },  //  PDA Team
-      { destination: "8x2o8wtQ1gCfsjf8bdTQijwXNQbWcD5xtdgXNqTEFrsm", amount: BigInt(2_000_000 * Math.pow(10, 9)) },  //  Multisig Team
-      { destination: "BRRFwentT7oVn448AU4t9yYGKP1k7pUtGwSef1Be1PkL", amount: BigInt(5_000_000 * Math.pow(10, 9)) }, // PDA Dao 5M
+      { destination: "DcULdzaL51jMapL4o9DVTqvVf3CM3CCHVjeXzfVGp6cT", amount: BigInt(100_000_000 * Math.pow(10, 9)) }, // 30% Liquidity multisig
+
   ];
 
   for (const { destination, amount } of distribution) {
