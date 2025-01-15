@@ -57,7 +57,7 @@ pub fn claim_fund(ctx: Context<ClaimTokens>) -> Result<()> {
 
     const MONTHLY_RELEASE: u64 = 1_250_000; // Amount of toknes ot be released at the end of every month
     const TOTAL_VESTING_PERIOD: u64 = 24;
-    const MONTH_IN_SECONDS: i64 = 60 * 10; // 1 month = 10 minutes for testing // And for prod const MONTH_IN_SECONDS: i64 = 60 * 60 * 24 * 30;
+    const MONTH_IN_SECONDS: i64 = 60 * 3; // 1 month = 3 minutes for testing // And for prod const MONTH_IN_SECONDS: i64 = 60 * 60 * 24 * 30;
 
     let mut available_tokens: u64 = 0;
 

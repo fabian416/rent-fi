@@ -63,7 +63,7 @@ const main = async () => {
     // Llamar a la función claim_marketing  
     // @ts-ignore
     const tx = await program.methods
-        .claimMarketing() // Cambia a `claimTeam()` si corresponde
+        .claimFund() // Cambia a `claimFund()` 
         .accounts({
         vestingAccount: vestingAccountPDA,
         beneficiary,
