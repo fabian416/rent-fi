@@ -57,24 +57,23 @@ pub fn claim_dao(ctx: Context<ClaimTokens>) -> Result<()> {
 
     const TEAM_FIRST_UNLOCK: u64 = 1_000_000; // 1 millones con 9 decimales // 20% liberados inmediatamente
     const TEAM_FINAL_UNLOCK: u64 = 4_000_000; // Final unlock of 8 million tokens
-    const TOTAL_LOCK_TIME: i64 = 60 * 10 * 12; // For testing 1 month = 1 hour // for PRODUCTION const TOTAL_LOCK_TIME: i64 = 60 * 60 * 24 * 30 * 12; // 12 months in seconds
+    const TOTAL_LOCK_TIME: i64 = 60 * 3 * 12; // For testing 1 month = 1 hour // for PRODUCTION const TOTAL_LOCK_TIME: i64 = 60 * 60 * 24 * 30 * 12; // 12 months in seconds
 
     let mut available_tokens: u64 = 0;
 
+    // Fase inicial de desbloqueo (20% de tokens)
     if now >= start_time + cliff_period && now < start_time + TOTAL_LOCK_TIME {
         if released_tokens < TEAM_FIRST_UNLOCK {
-            available_tokens = TEAM_FIRST_UNLOCK;
+            available_tokens = TEAM_FIRST_UNLOCK.saturating_sub(released_tokens);
         } else {
             return Err(ErrorCode::FirstUnlockAlreadyClaimed.into());
         }
     }
 
+    // Fase final de desbloqueo (80% de tokens restantes)
     if now >= start_time + TOTAL_LOCK_TIME {
-        available_tokens += TEAM_FINAL_UNLOCK;
-    } else {
-        return Err(ErrorCode::LockTimeNotFinished.into());
+        available_tokens += (TEAM_FIRST_UNLOCK + TEAM_FINAL_UNLOCK).saturating_sub(released_tokens);
     }
-
     // Calculamos los tokens que se pueden liberar ahora
     let releasable = available_tokens;
 

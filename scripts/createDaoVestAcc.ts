@@ -12,7 +12,7 @@ const PROGRAM_ID = new PublicKey("FUig98Z7S6ypR69rF5yHYaWUN41Jvjm7Qnkid8fhDpB3")
 const WALLET_KEYPAIR_PATH = process.env.WALLET_KEYPAIR_PATH || "Provide a wallety key pair";
 
 // Parámetros de inicialización WE USE THE DECIMALS FACTOR SO WE DONT NEED TO USE IT IN THE CONTRACTS
-const CLIFF_DURATION = new anchor.BN(6 * 60 * 60); // for PROD const CLIFF_DURATION = new anchor.BN(3 * 30 * 24 * 60 * 60); // Cliff en segundos
+const CLIFF_DURATION = new anchor.BN(60 * 3 * 6); // for PROD const CLIFF_DURATION = new anchor.BN(3 * 30 * 24 * 60 * 60); // Cliff en segundos
 const BENEFICIARY_TYPE = 3; // Tipo de beneficiario: Dao
 
 (async () => {
@@ -35,10 +35,10 @@ const BENEFICIARY_TYPE = 3; // Tipo de beneficiario: Dao
   const idl = require("../target/idl/vesting_v1.json"); // Cambia el nombre al de tu IDL
   const program = new anchor.Program(idl, provider);
   // Crear la cuenta Mint (SPL Token) si no existe
-  const mint = new PublicKey("J4RjmjUPT8HKpx7M8ZjwjBFLrQ2M7Ah9sSsYTq5jYC78");
+  const mint = new PublicKey("FMjNwsbDcmNJc9hCn6ysFzAVQGG8ssfF28AitmsxCMxn");
 
   // Dirección del beneficiario
-  const beneficiaryPublicKey = new PublicKey("HnUMqK9WFUQ6VWYBKQ5zYy1pUqM416Y8qMSHt6B4imZz"); // Cambia por la dirección real del beneficiario
+  const beneficiaryPublicKey = new PublicKey("54Z2qedcK3vgFE6DAzSbDyqrxjSL2ru9WA5LBUWeYmE9"); // Cambia por la dirección real del beneficiario
 
   // Calcular el PDA para la cuenta de vesting
   const [vestingAccountPDA] = await PublicKey.findProgramAddressSync(
@@ -46,7 +46,7 @@ const BENEFICIARY_TYPE = 3; // Tipo de beneficiario: Dao
     PROGRAM_ID
   );
 
-  console.log(`Vesting Account PDA: ${vestingAccountPDA.toBase58()}`);
+  console.log(`Vesting Account DAO PDA: ${vestingAccountPDA.toBase58()}`);
 
   // @ts-ignore
   const tx = await program.methods

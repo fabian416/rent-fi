@@ -43,7 +43,7 @@ const main = async () => {
     const vestingAccountPDA = new PublicKey("DP2Jv7RBXKzQX6S9p9AUBhuVtgEaNa8H2zEDKrEASvCW"); // PDA generated from the initialize function
 
     // beneficiary ATA
-    const beneficiaryAta = new PublicKey("EU4Lj4iB2XpzzBFNptfirfdxWa5VogyX819nqgnYXXuG");
+    const beneficiaryAta = new PublicKey("4hy9MbmFHux9x8Nn8dpCQRQvTVC3LifVQ3tNQtrVF8EP");
 
     // Public key of the mint address
     const mintAddress = new PublicKey("FMjNwsbDcmNJc9hCn6ysFzAVQGG8ssfF28AitmsxCMxn") 

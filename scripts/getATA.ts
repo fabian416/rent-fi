@@ -15,7 +15,7 @@ import {
   
     // Direcciones relevantes
     const mintAddress = new PublicKey("FMjNwsbDcmNJc9hCn6ysFzAVQGG8ssfF28AitmsxCMxn"); // Mint del token SPL
-    const beneficiaryAddress = new PublicKey("D3BfHFDk7fpthnQ2wkjEkM63aW4D495MRM5CJZ5huTnp"); // Dirección del propietario
+    const beneficiaryAddress = new PublicKey("54Z2qedcK3vgFE6DAzSbDyqrxjSL2ru9WA5LBUWeYmE9"); // Dirección del propietario
     const PROGRAM_ID = new PublicKey("FUig98Z7S6ypR69rF5yHYaWUN41Jvjm7Qnkid8fhDpB3");
     const [programSigner, bump] = await PublicKey.findProgramAddressSync(
       [Buffer.from("vesting-v1"), beneficiaryAddress.toBuffer()],

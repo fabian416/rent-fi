@@ -39,21 +39,20 @@ const main = async () => {
   const idl = require("../target/idl/vesting_v1.json"); // Cambia el nombre del archivo IDL si es diferente
   const program = new anchor.Program(idl, provider);
 
-
     // Dirección del PDA (vesting account)
-    const vestingAccountPDA = new PublicKey("E23vT7Lc2q1iUExcrgqGcs4RZGgPqG1NbRuXQ8MEV7qz"); // PDA generated from the initialize function
+    const vestingAccountPDA = new PublicKey("P9ndBSreYyPozL9niF64xm2A25TSJfXDP24uMSGJBNW"); // PDA generated from the initialize function
 
     // beneficiary ATA
-    const beneficiaryAta = new PublicKey("ZXG4pvinPhxzLjAHMRw1yUfkie66F4wpBqPTvQzTf8Q");
+    const beneficiaryAta = new PublicKey("HusbWtT7biAPVroGNmQh2zqYHyXH2Vqff4TCVo5TbimS");
 
     // Public key of the mint address
-    const mintAddress = new PublicKey("J4RjmjUPT8HKpx7M8ZjwjBFLrQ2M7Ah9sSsYTq5jYC78") 
+    const mintAddress = new PublicKey("FMjNwsbDcmNJc9hCn6ysFzAVQGG8ssfF28AitmsxCMxn") 
 
     // Beneficiario
-    const beneficiary = new PublicKey("81mWBWcomsjKxmNqPzZMrFSbNpu11niSWi844r9Vo1Ub");
+    const beneficiary = new PublicKey("54Z2qedcK3vgFE6DAzSbDyqrxjSL2ru9WA5LBUWeYmE9");
 
     // ATA of the PDA 
-    const pdaTokenAccount = new PublicKey("4VftGsXsUhYJDj53KGEgHXzSeR5usqzA65KvGdXGM95h"); // Owner of this account has to be VestingAccountPda 
+    const pdaTokenAccount = new PublicKey("47ksVJzP2Vzu75gXBEAKk9cKoqY25WwMYpr4GZ52xc2W"); // Owner of this account has to be VestingAccountPda 
 
     const [programSigner] = await PublicKey.findProgramAddressSync(
       [Buffer.from("vesting-v1"), beneficiary.toBuffer()],
@@ -63,7 +62,7 @@ const main = async () => {
     // Llamar a la función claim_marketing  
     // @ts-ignore
     const tx = await program.methods
-        .claimMarketing() // Cambia a `claimTeam()` si corresponde
+        .claimDao() // Cambia a `claimTeam()` si corresponde
         .accounts({
         vestingAccount: vestingAccountPDA,
         beneficiary,
@@ -79,9 +78,3 @@ const main = async () => {
 };
 
 main().catch((err) => console.error(err));
-
-
-// Regarding fee information there are 3 type of pools.
-// - The standar pool will take 0.25% fee wich 88% will go to the Liqudity providers, 0.03% to RAY Buybacks and the last 12% to the treasury of Raydium. 
-// - CPPM allows us to customize the fee tier in 4 different levels.
-// - CLLM allows us to customize the fee tier in 8 levels. 

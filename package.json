@@ -10,6 +10,9 @@
     "initialize-team": "npx ts-node scripts/createTeamVestAcc.ts",
     "transfer-tokens": "npx ts-node scripts/transferTokens.ts",
     "claim-marketing": "npx ts-node scripts/claimMarketing.ts",
+    "claim-dao": "npx ts-node scripts/claimDao.ts",
+    "claim-fund": "npx ts-node scripts/claimFund.ts",
+    "claim-team": "npx ts-node scripts/claimTeam.ts",
     "deploy": "npx ts-node scripts/index.ts",
     "lint:fix": "prettier */*.js \"*/**/*{.js,.ts}\" -w",
     "lint": "prettier */*.js \"*/**/*{.js,.ts}\" --check"
