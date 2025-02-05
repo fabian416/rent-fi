@@ -1,19 +1,18 @@
 use crate::error::ErrorCode;
 use crate::instructions::claim_tokens::ClaimTokens;
-
 use anchor_lang::prelude::*;
 use anchor_spl::{
     associated_token::get_associated_token_address_with_program_id,
     token_2022::{self, TransferChecked, ID},
 };
 
-pub fn claim_team(ctx: Context<ClaimTokens>) -> Result<()> {
+pub fn claim_fund(ctx: Context<ClaimTokens>) -> Result<()> {
     let beneficiary = ctx.accounts.vesting_account.beneficiary;
     let mint = ctx.accounts.vesting_account.mint;
     let beneficiary_type = ctx.accounts.vesting_account.beneficiary_type;
 
     // Verificaciones inmediatas para evitar cómputo innecesario
-    if beneficiary_type != 2 {
+    if beneficiary_type != 4 {
         return Err(ErrorCode::InvalidAccountType.into());
     }
 
@@ -56,26 +55,26 @@ pub fn claim_team(ctx: Context<ClaimTokens>) -> Result<()> {
         return Err(ErrorCode::InvalidPdaTokenAccount.into());
     }
 
-    const QUARTERLY_RELEASE: u64 = 1_000_000 * 10u64.pow(9); // Amount of toknes ot be released at the end of every quarter
+    const MONTHLY_RELEASE: u64 = 1_250_000; // Amount of toknes ot be released at the end of every month
     const TOTAL_VESTING_PERIOD: u64 = 24;
-    const QUARTERS_IN_SECONDS: i64 = 60 * 3 * 3; // for Production const QUARTERS_IN_SECONDS: i64 = 60 * 60 * 24 * 30 * 3;
+    const MONTH_IN_SECONDS: i64 = 60 * 60 * 24 * 30; // 1 month = 3 minutes for testing // And for prod const MONTH_IN_SECONDS: i64 = 60 * 60 * 24 * 30;
 
     let mut available_tokens: u64 = 0;
 
     if now >= start_time + cliff_period {
         // Calculate how many quarters has been passed since cliff ending
         let time_since_cliff = now - (start_time + cliff_period);
-        let quarters_passed = (time_since_cliff / QUARTERS_IN_SECONDS) as u64;
+        let months_passed = (time_since_cliff / MONTH_IN_SECONDS) as u64;
 
         // Calculate free tokens based in  quarters completed
-        let max_quarters = TOTAL_VESTING_PERIOD / 3; // 24 MONTHS  = 8 trimestres
-        let vested_quarters = quarters_passed.min(max_quarters);
+        let max_months = TOTAL_VESTING_PERIOD; // 24 MONTHS  = 8 trimestres
+        let vested_months = months_passed.min(max_months);
 
-        available_tokens += vested_quarters * QUARTERLY_RELEASE;
+        available_tokens = vested_months * MONTHLY_RELEASE;
     }
 
     // Calculamos los tokens que se pueden liberar ahora
-    let releasable = available_tokens - released_tokens;
+    let releasable = available_tokens.saturating_sub(released_tokens);
 
     msg!("Releasable tokens: {}", releasable);
 
@@ -99,7 +98,7 @@ pub fn claim_team(ctx: Context<ClaimTokens>) -> Result<()> {
                 },
                 signer_seeds,
             ),
-            releasable,
+            releasable * 10u64.pow(9),
             9,
         )?;
         msg!("Released {} tokens for Team Development", releasable);

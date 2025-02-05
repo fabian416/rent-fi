@@ -1,4 +1,4 @@
-import { createNewTokenMainTest, mintAndDistributeTokensMainTest } from './createTokenTestV1';
+import { createNewTokenMain, mintAndDistributeTokensMain } from './createTokenMain';
 import { createAssociatedTokenAccountIdempotentInstructionWithDerivation } from '@solana/spl-token';
 import { mintAndDistributeTokens, createNewToken  } from './createAndMintTokens';
 import * as dotenv from 'dotenv';
@@ -7,11 +7,10 @@ dotenv.config();
 
 async function main() {
     // Create new token
- //  await createNewTokenMainTest();
- // await createNewToken();
+  await createNewTokenMain();
     // Mint and distribute 1 billion tokens
  // await mintAndDistributeTokensMainTest();
-  await mintAndDistributeTokens(); 
+ // await mintAndDistributeTokens(); 
 }
 
 main();

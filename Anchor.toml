@@ -6,6 +6,7 @@ skip-lint = false
 
 [programs."https://api.devnet.solana.com"]
 cliff-vesting = "F1RHqKoZ8exesFaiip8qos6smpfiHv3AdUCpeJLWtK4C"
+rentfi-vesting = "Edb58tf9QWCJVoVYqppvYKrgueAxqR1nFFsNxhc7pNQv"
 vesting = "6zwP3ZLNrv5jwksK8Eztt7tFt2WYKDqdo5FXQkWv5otc"
 vesting-v1 = "FUig98Z7S6ypR69rF5yHYaWUN41Jvjm7Qnkid8fhDpB3"
 vesting-v2 = "6U1EhFyn2nFpNsxD5Rf6JU1eQeRgBPPv3aET6xZkoF5F"
@@ -18,8 +19,8 @@ rentfi = "6HD23Gh57Ezr3PJ2UmpcpiCqCE582VXe3jvpGqZXJwjv"
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "https://api.devnet.solana.com"
-wallet = "~/.config/solana/id.json"
+cluster = "https://api.mainnet-beta.solana.com"
+wallet = "~/.config/solana/deploy.json"
 
 [scripts]
 test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"

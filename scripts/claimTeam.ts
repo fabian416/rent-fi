@@ -16,12 +16,6 @@ const main = async () => {
 
   const connection = new anchor.web3.Connection(CLUSTER_URL, "confirmed");
   dotenv.config();
-  const private_key = process.env.SOLANA_PRIVATE_KEY;
-  const base58Key = private_key || "undefined";
-  const secretKey = bs58.decode(base58Key);
-
-  // Crear el Keypair desde el secretKey decodificado
-  const keypair = Keypair.fromSecretKey(secretKey);
 
   // Cargar la keypair de la billetera desde el archivo
   const walletKeypair = anchor.web3.Keypair.fromSecretKey(
@@ -40,20 +34,20 @@ const main = async () => {
   const program = new anchor.Program(idl, provider);
 
 
-    // Dirección del PDA (vesting account)
-    const vestingAccountPDA = new PublicKey("E23vT7Lc2q1iUExcrgqGcs4RZGgPqG1NbRuXQ8MEV7qz"); // PDA generated from the initialize function
+    // Dirección del PDA address(vesting account)
+    const vestingAccountPDA = new PublicKey("7k7WUgfjYxGBQ9Ve1R9YWyy9tLJdGYKX9tZkAgy6EaZp"); // PDA generated from the initialize function
 
     // beneficiary ATA
-    const beneficiaryAta = new PublicKey("ZXG4pvinPhxzLjAHMRw1yUfkie66F4wpBqPTvQzTf8Q");
+    const beneficiaryAta = new PublicKey("EjAmZRMTjLEPfQAedxD6KyCVEXFLEKPQ2b9reBGpB1qp");
 
     // Public key of the mint address
-    const mintAddress = new PublicKey("J4RjmjUPT8HKpx7M8ZjwjBFLrQ2M7Ah9sSsYTq5jYC78") 
+    const mintAddress = new PublicKey("FMjNwsbDcmNJc9hCn6ysFzAVQGG8ssfF28AitmsxCMxn") 
 
-    // Beneficiario
-    const beneficiary = new PublicKey("81mWBWcomsjKxmNqPzZMrFSbNpu11niSWi844r9Vo1Ub");
+    // Beneficiario address
+    const beneficiary = new PublicKey("6wN6vkfRXAE3iwNmUfJGfh1HRe9h2mMiiiEbgpMcY2UD");
 
     // ATA of the PDA 
-    const pdaTokenAccount = new PublicKey("4VftGsXsUhYJDj53KGEgHXzSeR5usqzA65KvGdXGM95h"); // Owner of this account has to be VestingAccountPda 
+    const pdaTokenAccount = new PublicKey("7PLJ2WuPAKwWGXtvheidqTi7saRCMnJxJ4noPKU2s8jY"); // Owner of this account has to be VestingAccountPda 
 
     const [programSigner] = await PublicKey.findProgramAddressSync(
       [Buffer.from("vesting-v1"), beneficiary.toBuffer()],
@@ -63,7 +57,7 @@ const main = async () => {
     // Llamar a la función claim_marketing  
     // @ts-ignore
     const tx = await program.methods
-        .claimMarketing() // Cambia a `claimTeam()` si corresponde
+        .claimTeam() // Cambia a `claimTeam()` si corresponde
         .accounts({
         vestingAccount: vestingAccountPDA,
         beneficiary,

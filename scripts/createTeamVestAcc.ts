@@ -12,7 +12,7 @@ const PROGRAM_ID = new PublicKey("FUig98Z7S6ypR69rF5yHYaWUN41Jvjm7Qnkid8fhDpB3")
 const WALLET_KEYPAIR_PATH = process.env.WALLET_KEYPAIR_PATH || "Provide a wallety key pair";
 
 // Parámetros de inicialización WE USE THE DECIMALS FACTOR SO WE DONT NEED TO USE IT IN THE CONTRACTS
-const CLIFF_DURATION = new anchor.BN(3 * 60 * 60); // for PROD const CLIFF_DURATION = new anchor.BN(3 * 30 * 24 * 60 * 60); // Cliff en segundos
+const CLIFF_DURATION = new anchor.BN(60 * 3 * 3); // for PROD const CLIFF_DURATION = new anchor.BN(3 * 30 * 24 * 60 * 60); // Cliff en segundos
 const BENEFICIARY_TYPE = 2; // Tipo de beneficiario: Team
 
 (async () => {
@@ -38,7 +38,7 @@ const BENEFICIARY_TYPE = 2; // Tipo de beneficiario: Team
   const mint = new PublicKey("FMjNwsbDcmNJc9hCn6ysFzAVQGG8ssfF28AitmsxCMxn");
 
   // Dirección del beneficiario
-  const beneficiaryPublicKey = new PublicKey("6LaE5pgoCPoFc8qNedaBdpEb3bVGyDeGXhQH4qBgnU6n"); // Cambia por la dirección real del beneficiario
+  const beneficiaryPublicKey = new PublicKey("6wN6vkfRXAE3iwNmUfJGfh1HRe9h2mMiiiEbgpMcY2UD"); // Cambia por la dirección real del beneficiario
 
   // Calcular el PDA para la cuenta de vesting
   const [vestingAccountPDA] = await PublicKey.findProgramAddressSync(

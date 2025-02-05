@@ -1,19 +1,18 @@
 use crate::error::ErrorCode;
 use crate::instructions::claim_tokens::ClaimTokens;
-
 use anchor_lang::prelude::*;
 use anchor_spl::{
     associated_token::get_associated_token_address_with_program_id,
     token_2022::{self, TransferChecked, ID},
 };
 
-pub fn claim_team(ctx: Context<ClaimTokens>) -> Result<()> {
+pub fn claim_marketing(ctx: Context<ClaimTokens>) -> Result<()> {
+    // Extraemos los datos inmutables al principio
     let beneficiary = ctx.accounts.vesting_account.beneficiary;
     let mint = ctx.accounts.vesting_account.mint;
     let beneficiary_type = ctx.accounts.vesting_account.beneficiary_type;
 
-    // Verificaciones inmediatas para evitar cómputo innecesario
-    if beneficiary_type != 2 {
+    if beneficiary_type != 1 {
         return Err(ErrorCode::InvalidAccountType.into());
     }
 
@@ -27,12 +26,14 @@ pub fn claim_team(ctx: Context<ClaimTokens>) -> Result<()> {
         return Err(ErrorCode::InvalidMint.into());
     }
 
-    let released_tokens = ctx.accounts.vesting_account.released_tokens;
     let start_time = ctx.accounts.vesting_account.start_time;
     let cliff_period = ctx.accounts.vesting_account.cliff_period;
+    let released_tokens = ctx.accounts.vesting_account.released_tokens;
 
+    // Calculamos el tiempo actual
     let now = Clock::get()?.unix_timestamp;
 
+    // Derivamos el PDA y las semillas
     let program_id = *ctx.program_id;
     let (program_signer, bump) =
         Pubkey::find_program_address(&[b"vesting-v1", beneficiary.as_ref()], &program_id);
@@ -56,9 +57,9 @@ pub fn claim_team(ctx: Context<ClaimTokens>) -> Result<()> {
         return Err(ErrorCode::InvalidPdaTokenAccount.into());
     }
 
-    const QUARTERLY_RELEASE: u64 = 1_000_000 * 10u64.pow(9); // Amount of toknes ot be released at the end of every quarter
+    const QUARTERLY_RELEASE: u64 = 1_406_250 * 10u64.pow(9); // 1.41M con 9 decimales // Amount of toknes ot be released at the end of every quarter
     const TOTAL_VESTING_PERIOD: u64 = 24;
-    const QUARTERS_IN_SECONDS: i64 = 60 * 3 * 3; // for Production const QUARTERS_IN_SECONDS: i64 = 60 * 60 * 24 * 30 * 3;
+    const QUARTERS_IN_SECONDS: i64 = 60 * 60 * 24 * 30 * 3; // const QUARTERS_IN_SECONDS: i64 = 60 * 60 * 24 * 30 * 3;
 
     let mut available_tokens: u64 = 0;
 
@@ -83,11 +84,11 @@ pub fn claim_team(ctx: Context<ClaimTokens>) -> Result<()> {
         return Err(ErrorCode::NoTokensToClaim.into());
     }
 
+    // Actualizamos la cuenta mutable y realizamos la transferencia si es necesario
     if releasable > 0 {
         let vesting_account = &mut ctx.accounts.vesting_account; // Acceso mutable
         vesting_account.released_tokens += releasable;
 
-        // Transfer tokens to beneficiary
         token_2022::transfer_checked(
             CpiContext::new_with_signer(
                 ctx.accounts.token_program.to_account_info(),
@@ -102,9 +103,10 @@ pub fn claim_team(ctx: Context<ClaimTokens>) -> Result<()> {
             releasable,
             9,
         )?;
-        msg!("Released {} tokens for Team Development", releasable);
+        msg!("Released {} tokens for Marketing", releasable);
     } else {
         msg!("No tokens available for release");
+        return Err(ErrorCode::InsufficientTokens.into());
     }
 
     Ok(())

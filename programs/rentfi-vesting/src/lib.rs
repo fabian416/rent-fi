@@ -4,11 +4,10 @@ pub mod state;
 
 use anchor_lang::prelude::*;
 use instructions::*;
-
-declare_id!("FUig98Z7S6ypR69rF5yHYaWUN41Jvjm7Qnkid8fhDpB3");
+declare_id!("Edb58tf9QWCJVoVYqppvYKrgueAxqR1nFFsNxhc7pNQv");
 
 #[program]
-pub mod vesting_v1 {
+pub mod rentfi_vesting {
 
     use super::*;
 

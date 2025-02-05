@@ -7,7 +7,7 @@ import fs from "fs";
 dotenv.config();
 
 // Configuración inicial
-const CLUSTER_URL = process.env.CLUSTER_URL || "https://api.devnet.solana.com";
+const CLUSTER_URL = process.env.CLUSTER_URL || "https://api.mainnet-beta.solana.com";
 const PROGRAM_ID = new PublicKey("FUig98Z7S6ypR69rF5yHYaWUN41Jvjm7Qnkid8fhDpB3"); // Reemplaza con tu PROGRAM_ID
 const WALLET_KEYPAIR_PATH = process.env.WALLET_KEYPAIR_PATH || "Provide a wallety key pair";
 
