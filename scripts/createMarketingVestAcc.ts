@@ -8,11 +8,11 @@ dotenv.config();
 
 // Configuración inicial
 const CLUSTER_URL = process.env.CLUSTER_URL || "https://api.mainnet-beta.solana.com";
-const PROGRAM_ID = new PublicKey("FUig98Z7S6ypR69rF5yHYaWUN41Jvjm7Qnkid8fhDpB3"); // Reemplaza con tu PROGRAM_ID
+const PROGRAM_ID = new PublicKey("Edb58tf9QWCJVoVYqppvYKrgueAxqR1nFFsNxhc7pNQv"); // Reemplaza con tu PROGRAM_ID
 const WALLET_KEYPAIR_PATH = process.env.WALLET_KEYPAIR_PATH || "Provide a wallety key pair";
 
 // Parámetros de inicialización WE USE THE DECIMALS FACTOR SO WE DONT NEED TO USE IT IN THE CONTRACTS
-const CLIFF_DURATION = new anchor.BN(60 * 30 * 3); // for PROD const CLIFF_DURATION = new anchor.BN(3 * 30 * 24 * 60 * 60); // Cliff en segundos
+const CLIFF_DURATION = new anchor.BN( 60 * 60 * 24 * 30 * 3); // for PROD const CLIFF_DURATION = new anchor.BN(3 * 30 * 24 * 60 * 60); // Cliff en segundos
 const BENEFICIARY_TYPE = 1; // Tipo de beneficiario: Marketing
 
 (async () => {
@@ -32,13 +32,13 @@ const BENEFICIARY_TYPE = 1; // Tipo de beneficiario: Marketing
   anchor.setProvider(provider);
 
   // Cargar el IDL de tu programa
-  const idl = require("../target/idl/vesting_v1.json"); // Cambia el nombre al de tu IDL
+  const idl = require("../target/idl/rentfi_vesting.json"); // Cambia el nombre al de tu IDL
   const program = new anchor.Program(idl, provider);
   // Crear la cuenta Mint (SPL Token) si no existe
-  const mint = new PublicKey("FMjNwsbDcmNJc9hCn6ysFzAVQGG8ssfF28AitmsxCMxn");
+  const mint = new PublicKey("EPW6L3UrX8ArF4SVsGFNNNs2XccugnJGNNzXLeHUCNuz");
 
   // Dirección del beneficiario
-  const beneficiaryPublicKey = new PublicKey("D3BfHFDk7fpthnQ2wkjEkM63aW4D495MRM5CJZ5huTnp"); // Cambia por la dirección real del beneficiario
+  const beneficiaryPublicKey = new PublicKey("6SbybXSGViN4Q1QzjFVbR6gvHhAFdNAhhbtyBsMsL5Sj"); // Cambia por la dirección real del beneficiario
 
   // Calcular el PDA para la cuenta de vesting
   const [vestingAccountPDA] = await PublicKey.findProgramAddressSync(

@@ -152,19 +152,19 @@ import {
     console.log("Minting and distributing tokens...");
   
     // Mint Address
-    const mintAddress = "";
+    const mintAddress = "EPW6L3UrX8ArF4SVsGFNNNs2XccugnJGNNzXLeHUCNuz";
     const mintPublicKey = new PublicKey(mintAddress);
   
     // Destination test account addresses 4 PDAs 4 Multisigs
     const distribution = [
         { destination: "J2MzBXmk4m1dBS2SNCW4kJ7d1Hv9oBdz58LKZycUCeiH", amount: BigInt(30_000_000 * Math.pow(10, 9)) }, // 30% Liquidity multisig
-        { destination: "", amount: BigInt(30_000_000 * Math.pow(10, 9)) }, // PDA Fund
+        { destination: "AfgEmd5YgZCYCVMJA7XTCPjeNaWwuNfQodPhmxZE1ZSk", amount: BigInt(30_000_000 * Math.pow(10, 9)) }, // PDA Fund
         { destination: "9vtRDptaaKSqnnQ8qpJDyH7KWzHgewsGqRuecpXqf4dg", amount: BigInt(10_000_000 * Math.pow(10, 9)) }, // Multisig Fund
-        { destination: "", amount: BigInt(11_250_000 * Math.pow(10, 9)) }, // PDA marketing
+        { destination: "GWZDvfZZTeCdCNd4zhHRQy5K5obY24TWU7LBebJS2My1", amount: BigInt(11_250_000 * Math.pow(10, 9)) }, // PDA marketing
         { destination: "6SbybXSGViN4Q1QzjFVbR6gvHhAFdNAhhbtyBsMsL5Sj", amount: BigInt(3_750_000 * Math.pow(10, 9)) }, //  Multisig marketing
-        { destination: "", amount: BigInt(8_000_000 * Math.pow(10, 9)) },  //  PDA Team
+        { destination: "J3W47QCZVwgYBCQsud9FdwowaY7p5bk2mzD48ypRCyUq", amount: BigInt(8_000_000 * Math.pow(10, 9)) },  //  PDA Team
         { destination: "AZV4gYxmuCvkR4sCcXKXNMo4jpk6JfdR2r9WL1w5pQTE", amount: BigInt(2_000_000 * Math.pow(10, 9)) },  //  Multisig Team
-        { destination: "", amount: BigInt(5_000_000 * Math.pow(10, 9)) }, // PDA Dao 5M
+        { destination: "DorWhN1Y4UyUsyoXQtTxZy6t3HwArknDPYde2pGoxL16", amount: BigInt(5_000_000 * Math.pow(10, 9)) }, // PDA Dao 5M
     ];
   
     for (const { destination, amount } of distribution) {
