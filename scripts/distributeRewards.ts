@@ -9,8 +9,17 @@ import fs from "fs";
 type Holder = {
   address: string;
   amount: number;
-  firstTransactionDate?: string; // ✅ Now correctly handles undefined
+  calculateRewards: number; // we calculate the rewards based on the total supply and the actual amount the holder has
+  firstTransactionDate?: string; 
 };
+
+const calculateDistributionRewards  = async ( walletAddress: string, amount: number): Promise<number | undefined> => { 
+  try { 
+     
+  } catch (error){ 
+    console.log("Error trying to calculate the dsitribution rewards");
+  }
+} 
 
 // ✅ Function to fetch the first transaction date of a wallet
 const getFirstTransactionDate = async (walletAddress: string): Promise<string | undefined> => {
@@ -88,6 +97,7 @@ const findHolders = async () => {
       if (tokenBalance >= 1000) {
         holders.push({
           address: account.owner,
+          calculateRewards: 0,
           amount: tokenBalance
         });
       }
