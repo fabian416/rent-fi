@@ -13,6 +13,7 @@
     "claim-dao": "npx ts-node scripts/claimDao.ts",
     "claim-fund": "npx ts-node scripts/claimFund.ts",
     "claim-team": "npx ts-node scripts/claimTeam.ts",
+    "distribute-tokens": "npx ts-node scripts/distributeRewards.ts",
     "deploy": "npx ts-node scripts/index.ts",
     "lint:fix": "prettier */*.js \"*/**/*{.js,.ts}\" -w",
     "lint": "prettier */*.js \"*/**/*{.js,.ts}\" --check"
