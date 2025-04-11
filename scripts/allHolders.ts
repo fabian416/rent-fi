@@ -1,13 +1,19 @@
 import dotenv from "dotenv";
+import fs from "fs";
+
 dotenv.config();
 
 const url = `https://mainnet.helius-rpc.com/?api-key=${process.env.HELIUS_API_KEY}`;
-import fs from "fs";
 
-// ✅ Función para obtener holders con al menos 1 token
-const findHolders = async () => {
-  let page = 1;
-  let holders = new Set(); // Usamos un Set para evitar duplicados
+type Holder = {
+  address: string;
+  balance: number;
+};
+
+// ✅ Function to find holders with at least 1000 RENT tokens
+const findEligibleHolders = async () => {
+  let page: number = 1;
+  let holders: Holder[] = [];
 
   while (true) {
     const response = await fetch(url, {
@@ -23,7 +29,7 @@ const findHolders = async () => {
           page: page,
           limit: 1000,
           displayOptions: {},
-          mint: "EPW6L3UrX8ArF4SVsGFNNNs2XccugnJGNNzXLeHUCNuz", // Dirección del token
+          mint: "EPW6L3UrX8ArF4SVsGFNNNs2XccugnJGNNzXLeHUCNuz", // Token address
         },
       }),
     });
@@ -34,31 +40,34 @@ const findHolders = async () => {
     }
 
     const data = await response.json();
-    console.log(`📌 Procesando resultados de la página ${page}`);
+    console.log(`📌 Processing page ${page}`);
 
     if (!data.result || data.result.token_accounts.length === 0) {
-      console.log(`✅ No hay más resultados. Total de páginas procesadas: ${page - 1}`);
+      console.log(`✅ No more results. Total pages processed: ${page - 1}`);
       break;
     }
 
-    // ✅ Guardamos solo las direcciones (sin balances ni fechas)
-    data.result.token_accounts.forEach((account: { amount: number; owner: unknown; }) => {
-      const tokenBalance = account.amount / 10 ** 9;
-      if (tokenBalance >= 1) {
-        holders.add(account.owner);
+    data.result.token_accounts.forEach((account: { owner: string; amount: number }) => {
+      const rawBalance = account.amount / 10 ** 9;  // Convert from raw amount
+      const integerBalance = Math.floor(rawBalance); // ✅ Convert to whole number
+      if (integerBalance >= 1000) {
+        holders.push({ address: account.owner, balance: integerBalance });
       }
     });
 
     page++;
   }
 
-  console.log(`✅ Total de holders encontrados: ${holders.size}`);
+  console.log(`✅ Total eligible holders found: ${holders.length}`);
 
-  // ✅ Convertimos el Set a un array y guardamos en JSON
-  const holdersArray = Array.from(holders);
-  fs.writeFileSync("holders_addresses.json", JSON.stringify(holdersArray, null, 2));
+  // ✅ Save data to JSON
+  fs.writeFileSync("eligible_holders_5_april.json", JSON.stringify(holders, null, 2));
 
-  console.log(`✅ Holders guardados en 'holders_addresses.json'`);
+  // ✅ Save data to CSV with no decimals
+  const csvContent = holders.map(({ address, balance }) => `${address}, ${balance}`).join("\n");
+  fs.writeFileSync("eligible_holders_5_april.csv", csvContent);
+
+  console.log(`📦 Holders saved in 'eligible_holders_5_april.json' and 'eligible_holders_5_april.csv'`);
 };
 
-findHolders();
+findEligibleHolders();
