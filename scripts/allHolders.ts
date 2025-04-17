@@ -58,16 +58,16 @@ const findEligibleHolders = async () => {
     page++;
   }
 
-  console.log(`✅ Total eligible holders found: ${holders.length}`);
+  console.log(`Total eligible holders found: ${holders.length}`);
 
-  // ✅ Save data to JSON
-  fs.writeFileSync("eligible_holders_5_april.json", JSON.stringify(holders, null, 2));
+  // Save data to JSON
+  fs.writeFileSync("eligible_holders_17_april.json", JSON.stringify(holders, null, 2));
 
-  // ✅ Save data to CSV with no decimals
+  // Save data to CSV with no decimals
   const csvContent = holders.map(({ address, balance }) => `${address}, ${balance}`).join("\n");
-  fs.writeFileSync("eligible_holders_5_april.csv", csvContent);
+  fs.writeFileSync("eligible_holders_17_april.csv", csvContent);
 
-  console.log(`📦 Holders saved in 'eligible_holders_5_april.json' and 'eligible_holders_5_april.csv'`);
+  console.log(`📦 Holders saved in 'eligible_holders__april.json' and 'eligible_holders_5_april.csv'`);
 };
 
 findEligibleHolders();
