@@ -8,6 +8,7 @@
     "initialize-dao": "npx ts-node scripts/createDaoVestAcc.ts",
     "initialize-fund": "npx ts-node scripts/createFundVestAcc.ts",
     "initialize-team": "npx ts-node scripts/createTeamVestAcc.ts",
+    "all-holders": "npx ts-node scripts/getAllHolders.ts",
     "transfer-tokens": "npx ts-node scripts/transferTokens.ts",
     "claim-marketing": "npx ts-node scripts/claimMarketing.ts",
     "claim-dao": "npx ts-node scripts/claimDao.ts",
