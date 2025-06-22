@@ -17,13 +17,13 @@ function loadAddressBalancesFromCSV(filePath: string): Map<string, number> {
   return addressMap;
 }
 
-const oldSnapshotPath = "eligible_holders_21_may.csv";  // 22 abril
-const newSnapshotPath = "eligible_holders_5_june.csv";  // hoy 5 de junio
+const oldSnapshotPath = "eligible_holders_20_june.csv";  // To be set to the old snapshot date
+const newSnapshotPath = "eligible_holders_5_july.csv";  // To be set to the new snapshot date
 
 const oldMap = loadAddressBalancesFromCSV(oldSnapshotPath);
 const newMap = loadAddressBalancesFromCSV(newSnapshotPath);
 
-// 1. Elegibles: estaban antes y siguen hoy y tienen al menos 1000 tokens
+// 1. Final elegibles wichc were in the old snapshot and have a balance >= 1000
 const finalEligible: string[] = [];
 newMap.forEach((balance, address) => {
   if (oldMap.has(address) && balance >= 1000) {
@@ -32,7 +32,7 @@ newMap.forEach((balance, address) => {
 });
 fs.writeFileSync("final_eligible_wallets.csv", finalEligible.join("\n"));
 
-// 2. Nuevos (no estaban antes)
+// 2. New wallets that are not in the old snapshot
 const newWallets: string[] = [];
 newMap.forEach((balance, address) => {
   if (!oldMap.has(address)) {
