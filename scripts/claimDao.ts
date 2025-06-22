@@ -9,7 +9,7 @@ import bs58 from "bs58";
 dotenv.config();
 
 // Configuración inicial
-const CLUSTER_URL = process.env.CLUSTER_URL || "https://api.devnet.solana.com";
+const CLUSTER_URL = process.env.CLUSTER_URL || "https://api.mainnet-beta.solana.com";
 const WALLET_KEYPAIR_PATH = process.env.WALLET_KEYPAIR_PATH || "Provide a wallety key pair";
 
 const main = async () => {
