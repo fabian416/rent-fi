@@ -10,7 +10,6 @@ dotenv.config();
 
 // Configuración inicial
 const CLUSTER_URL = process.env.CLUSTER_URL || "https://api.mainnet-beta.solana.com";
-const WALLET_KEYPAIR_PATH = process.env.WALLET_KEYPAIR_PATH || "Provide a wallety key pair";
 
 const main = async () => {
   const connection = new anchor.web3.Connection(CLUSTER_URL, "confirmed");
