@@ -3,6 +3,19 @@ import fs from "fs";
 
 dotenv.config();
 
+// Addresses to ignore
+const ignoreList = new Set([
+  "GpMZbSM2GgvTKHJirzeGfMFoaZ8UR2X7F4v8vHTvxFbL",
+  "J3W47QCZVwgYBCQsud9FdwowaY7p5bk2mzD48ypRCyUq",
+  "GWZDvfZZTeCdCNd4zhHRQy5K5obY24TWU7LBebJS2My1",
+  "DorWhN1Y4UyUsyoXQtTxZy6t3HwArknDPYde2pGoxL16",
+  "AfgEmd5YgZCYCVMJA7XTCPjeNaWwuNfQodPhmxZE1ZSk",
+  "J2MzBXmk4m1dBS2SNCW4kJ7d1Hv9oBdz58LKZycUCeiH",
+  "9vtRDptaaKSqnnQ8qpJDyH7KWzHgewsGqRuecpXqf4dg",
+  "6SbybXSGViN4Q1QzjFVbR6gvHhAFdNAhhbtyBsMsL5Sj",
+  "AZV4gYxmuCvkR4sCcXKXNMo4jpk6JfdR2r9WL1w5pQTE"
+]);
+
 const url = `https://mainnet.helius-rpc.com/?api-key=${process.env.HELIUS_API_KEY}`;
 
 type Holder = {
@@ -50,7 +63,7 @@ const findEligibleHolders = async () => {
     data.result.token_accounts.forEach((account: { owner: string; amount: number }) => {
       const rawBalance = account.amount / 10 ** 9;  // Convert from raw amount
       const integerBalance = Math.floor(rawBalance); // ✅ Convert to whole number
-      if (integerBalance >= 1000) {
+      if (integerBalance >= 1000 && !ignoreList.has(account.owner)) {
         holders.push({ address: account.owner, balance: integerBalance });
       }
     });
@@ -62,9 +75,8 @@ const findEligibleHolders = async () => {
 
   // Save data to CSV with no decimals
   const csvContent = holders.map(({ address, balance }) => `${address}, ${balance}`).join("\n");
-  fs.writeFileSync("eligible_holders_20_june.csv", csvContent);
+  fs.writeFileSync("eligible_holders_5_july.csv", csvContent);
 
-  console.log(`📦 Holders saved in 'eligible_holders__april.json' and 'eligible_holders_5_april.csv'`);
 };
 
 findEligibleHolders();
