@@ -15,17 +15,13 @@ const WALLET_KEYPAIR_PATH = process.env.WALLET_KEYPAIR_PATH || "Provide a wallet
 const main = async () => {
   const connection = new anchor.web3.Connection(CLUSTER_URL, "confirmed");
   dotenv.config();
-  const private_key = process.env.SOLANA_PRIVATE_KEY;
-  const base58Key = private_key || "undefined";
-  const secretKey = bs58.decode(base58Key);
+  const WALLET_PRIVATE_KEY_BASE58 = process.env.WALLET_PRIVATE_KEY_BASE58;
+  if (!WALLET_PRIVATE_KEY_BASE58) {
+    throw new Error("Debe definir WALLET_PRIVATE_KEY_BASE58 en el archivo .env");
+  }
 
-  // Crear el Keypair desde el secretKey decodificado
-  const keypair = Keypair.fromSecretKey(secretKey);
-
-  // Cargar la keypair de la billetera desde el archivo
-  const walletKeypair = anchor.web3.Keypair.fromSecretKey(
-    Uint8Array.from(JSON.parse(fs.readFileSync(WALLET_KEYPAIR_PATH, "utf-8")))
-  );
+  const decoded = bs58.decode(WALLET_PRIVATE_KEY_BASE58);
+  const walletKeypair = Keypair.fromSecretKey(decoded);
   const wallet = new anchor.Wallet(walletKeypair);
 
   // Crear el proveedor y configurar Anchor
@@ -35,24 +31,23 @@ const main = async () => {
   anchor.setProvider(provider);
 
   // IDL y programa
-  const idl = require("../target/idl/vesting_v1.json"); // Cambia el nombre del archivo IDL si es diferente
+  const idl = require("../target/idl/rentfi_vesting.json"); // Cambia el nombre del archivo IDL si es diferente
   const program = new anchor.Program(idl, provider);
 
+    // Address del PDA (vesting account)
+    const vestingAccountPDA = new PublicKey("GWZDvfZZTeCdCNd4zhHRQy5K5obY24TWU7LBebJS2My1"); // PDA generated from the initialize function
 
-    // Dirección del PDA (vesting account)
-    const vestingAccountPDA = new PublicKey("DP2Jv7RBXKzQX6S9p9AUBhuVtgEaNa8H2zEDKrEASvCW"); // PDA generated from the initialize function
-
-    // beneficiary ATA
-    const beneficiaryAta = new PublicKey("4hy9MbmFHux9x8Nn8dpCQRQvTVC3LifVQ3tNQtrVF8EP");
+    // beneficiary ATA (associated token account)
+    const beneficiaryAta = new PublicKey("CV2hNCoMkfFJrFvZEEqoFnEDNjMBAvKYfXGj6581sq8x");
 
     // Public key of the mint address
-    const mintAddress = new PublicKey("FMjNwsbDcmNJc9hCn6ysFzAVQGG8ssfF28AitmsxCMxn") 
+    const mintAddress = new PublicKey("EPW6L3UrX8ArF4SVsGFNNNs2XccugnJGNNzXLeHUCNuz");
 
     // Beneficiario
-    const beneficiary = new PublicKey("D3BfHFDk7fpthnQ2wkjEkM63aW4D495MRM5CJZ5huTnp");
+    const beneficiary = new PublicKey("6SbybXSGViN4Q1QzjFVbR6gvHhAFdNAhhbtyBsMsL5Sj");
 
     // ATA of the PDA 
-    const pdaTokenAccount = new PublicKey("3VJGjKz9FrqnL1LmGW3Pem3rmiGHRTFoxwhmDezqKkQA"); // Owner of this account has to be VestingAccountPda 
+    const pdaTokenAccount = new PublicKey("5qGzZTkNQwQj8HgdwcAXCjecveuyuy4a6HpiycD4ACic"); // Owner of this account has to be VestingAccountPda 
 
     const [programSigner] = await PublicKey.findProgramAddressSync(
       [Buffer.from("vesting-v1"), beneficiary.toBuffer()],
