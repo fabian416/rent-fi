@@ -14,13 +14,12 @@ import {
   
     // Direcciones relevantes
     const mintAddress = new PublicKey("EPW6L3UrX8ArF4SVsGFNNNs2XccugnJGNNzXLeHUCNuz"); // Mint del token SPL
-    const beneficiaryAddress = new PublicKey("AZV4gYxmuCvkR4sCcXKXNMo4jpk6JfdR2r9WL1w5pQTE"); // Dirección del propietario
+    const beneficiaryAddress = new PublicKey("E3kn3jfEBzie3hxJn1C2nVUReHob9reyRYJWTqHZYXae"); // Dirección del propietario
 
     // Permitir propietarios off-curve si es un PDA
     const allowOwnerOffCurve = true;
   
     // Opcional: Si estás usando un programa de tokens diferente (como Token 2022)
-    const programId = new PublicKey("Edb58tf9QWCJVoVYqppvYKrgueAxqR1nFFsNxhc7pNQv"); // O usa TOKEN_2022_PROGRAM_ID
     const associatedTokenProgramId = ASSOCIATED_TOKEN_PROGRAM_ID;
   
     // Obtener la dirección del ATA
