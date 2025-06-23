@@ -1,7 +1,6 @@
 import {
     PublicKey,
     Connection,
-    Keypair,
   } from "@solana/web3.js";
   import {
     getAssociatedTokenAddressSync,
@@ -10,25 +9,18 @@ import {
   } from "@solana/spl-token";
   
   (async () => {
-    const CLUSTER_URL = "https://api.devnet.solana.com";
+    const CLUSTER_URL = "https://api.mainnet-beta.solana.com";
     const connection = new Connection(CLUSTER_URL, "confirmed");
   
     // Direcciones relevantes
-    const mintAddress = new PublicKey("FMjNwsbDcmNJc9hCn6ysFzAVQGG8ssfF28AitmsxCMxn"); // Mint del token SPL
-    const beneficiaryAddress = new PublicKey("6wN6vkfRXAE3iwNmUfJGfh1HRe9h2mMiiiEbgpMcY2UD"); // Dirección del propietario
-    const PROGRAM_ID = new PublicKey("FUig98Z7S6ypR69rF5yHYaWUN41Jvjm7Qnkid8fhDpB3");
-    const [programSigner, bump] = await PublicKey.findProgramAddressSync(
-      [Buffer.from("vesting-v1"), beneficiaryAddress.toBuffer()],
-      PROGRAM_ID
-    );
+    const mintAddress = new PublicKey("EPW6L3UrX8ArF4SVsGFNNNs2XccugnJGNNzXLeHUCNuz"); // Mint del token SPL
+    const beneficiaryAddress = new PublicKey("AZV4gYxmuCvkR4sCcXKXNMo4jpk6JfdR2r9WL1w5pQTE"); // Dirección del propietario
 
-    console.log("programSigner, bump", programSigner, bump);
-  
     // Permitir propietarios off-curve si es un PDA
-    const allowOwnerOffCurve = false;
+    const allowOwnerOffCurve = true;
   
     // Opcional: Si estás usando un programa de tokens diferente (como Token 2022)
-    const programId = TOKEN_2022_PROGRAM_ID; // O usa TOKEN_2022_PROGRAM_ID
+    const programId = new PublicKey("Edb58tf9QWCJVoVYqppvYKrgueAxqR1nFFsNxhc7pNQv"); // O usa TOKEN_2022_PROGRAM_ID
     const associatedTokenProgramId = ASSOCIATED_TOKEN_PROGRAM_ID;
   
     // Obtener la dirección del ATA
@@ -37,7 +29,7 @@ import {
         mintAddress,
         beneficiaryAddress,
         allowOwnerOffCurve,
-        programId,
+        TOKEN_2022_PROGRAM_ID,
         associatedTokenProgramId
       );
   
